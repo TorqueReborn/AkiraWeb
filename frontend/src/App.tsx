@@ -35,7 +35,9 @@ const App = () => {
   return (
     <div className="font-poppins">
       {splashSeen ? null : <Splash />}
-      {animes.length > 0 ? animes : <p>Loading animes...</p>}
+      <div className="flex">
+        {animes.length > 0 ? animes : <p>Loading animes...</p>}
+      </div>
     </div>
   )
 }
