@@ -1,2 +1,1 @@
-Show Splash Screen only once. 
-So store the boolean value in localStorage.
+Current api doesn't provide description and banner so spotlight is null
