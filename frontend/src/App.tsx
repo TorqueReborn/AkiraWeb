@@ -1,4 +1,5 @@
 import Splash from "./splash/Splash"
+import Spotlight from "./spotlight/Spotlight";
 
 const App = () => {
   const splashSeen = localStorage.getItem("splashSeen");
@@ -6,6 +7,7 @@ const App = () => {
   return (
     <div className="font-poppins">
       {splashSeen ? null : <Splash />}
+      <Spotlight />
     </div>
   )
 }
