@@ -24,9 +24,9 @@ const Splash = () => {
             <h1 className="text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
                 Akira
             </h1>
-            <p>By Ghost Reborn!!!</p>
+            <p className="mb-5">By Ghost Reborn!!!</p>
             <button onClick={handleClick}>
-                <AiFillRightCircle className="text-5xl mt-5 cursor-pointer"/>
+                <AiFillRightCircle className="text-5xl cursor-pointer"/>
             </button>
         </div>
     )
