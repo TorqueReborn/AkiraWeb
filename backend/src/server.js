@@ -1,7 +1,7 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import connectAllAnime from './util.js';
+import { connectAllAnime, connectSite } from './util.js';
 
 dotenv.config();
 const app = express();
@@ -47,8 +47,24 @@ app.get('/server', async (_, res) => {
         }
     })
 
+    const urls = []
+
+    for (const source of test) {
+        if (!source.url.includes('clock')) {
+            urls.push(source.url);
+            continue
+        }
+        const siteData = await connectSite(source.url);
+        if ('message' in siteData) {
+            continue
+        }
+        siteData.links.map(link => {
+            urls.push(link.link);
+        })
+    }
+
     if (data) {
-        res.json(test);
+        res.json(urls);
     } else {
         res.status(500).json({ error: 'Failed to fetch data' });
     }
