@@ -3,11 +3,13 @@ interface CardProps {
     thumbnail: string
 }
 
-const Card = ({name, thumbnail}: CardProps) => {
+const Card = ({ name, thumbnail }: CardProps) => {
     return (
-        <div className="relative w-56">
-            <img src={thumbnail} alt="Anime Image" />
-            <h2 className="w-full text-md line-clamp-2 text-center">{name}</h2>
+        <div className="ml-6 w-56 h-72">
+            <div className="relative w-72 h-full flex">
+                <h2 className="bg-amber-500 absolute -bottom-3 -left-3 origin-left -rotate-90 line-clamp-1 w-full">{name}</h2>
+                <img src={thumbnail} alt="Anime Image" className="w-56 h-72" />
+            </div>
         </div>
     )
 }
