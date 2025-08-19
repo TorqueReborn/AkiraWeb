@@ -5,7 +5,7 @@ const App = () => {
 
   return (
     <div className="font-poppins">
-      {splashSeen ? 'Splash Seen' : <Splash />}
+      {splashSeen ? null : <Splash />}
     </div>
   )
 }
