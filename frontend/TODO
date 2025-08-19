@@ -1,0 +1,2 @@
+Show Splash Screen only once. 
+So store the boolean value in localStorage.
