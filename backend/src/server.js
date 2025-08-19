@@ -1,7 +1,7 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import { connectAllAnime, parseAnime } from './util.js';
+import { connectAllAnime } from './util.js';
 
 dotenv.config();
 const app = express();
@@ -18,19 +18,25 @@ app.listen(PORT, () => {
 });
 
 app.get('/latest', async (_, res) => {
-    let url = `${API_BASE}?query={shows{edges{_id,name,thumbnail}}}`
+    let url = `${API_BASE}?query={shows{edges{_id,name,description,banner,thumbnail}}}`
     const data = await connectAllAnime(url);
     if (data) {
         const rawJSON = await data.json();
-        res.json(parseAnime(rawJSON));
+        res.json(rawJSON.data.shows.edges);
     } else {
         res.status(500).json({ error: 'Failed to fetch data' });
     }
 });
 
-app.get('/server', async (_, res) => {
-    const url = `https://api.allanime.day/api?variables={%22showId%22:%22ReooPAxPMsHM4KPMY%22,%22translationType%22:%22sub%22,%22episodeString%22:%221140%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%225f1a64b73793cc2234a389cf3a8f93ad82de7043017dd551f38f65b89daa65e0%22}}`
+app.get('/spotlight', async (_, res) => {
+    let url = `${API_BASE}?variables={"type":"anime","size":20,"dateRange":1}&query=query($type:VaildPopularTypeEnumType!,$size:Int!,$dateRange:Int!){queryPopular(type:$type,size:$size,dateRange:$dateRange){recommendations{anyCard{_id,name,description,banner,thumbnail}}}}`
     const data = await connectAllAnime(url);
-    
-    res.json(data)
+    if (data) {
+        const rawJSON = await data.json();
+        res.json(rawJSON.data.queryPopular.recommendations.map(anime => {
+            return anime.anyCard
+        }))
+    } else {
+        res.status(500).json({ error: 'Failed to fetch data' });
+    }
 });

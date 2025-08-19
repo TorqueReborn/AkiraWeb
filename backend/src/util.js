@@ -7,7 +7,7 @@ const connectAllAnime = async (url) => {
         });
 
         if (!response.ok) {
-            return { message: 'Failed to fetch data from AllAnime API', status: response.status };
+            return await response.text();  
         }
         return response
 
