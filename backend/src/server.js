@@ -21,7 +21,19 @@ app.get('/latest', async (_, res) => {
     const url = `${API_BASE}?variables={}&extensions={\"persistedQuery\":{\"version\":1,\"sha256Hash\":\"06327bc10dd682e1ee7e07b6db9c16e9ad2fd56c1b769e47513128cd5c9fc77a\"}}`
     const data = await connectAllAnime(url);
     if (data) {
-        res.json(data);
+        const animes = data.data.shows.edges.map(edge => {
+            let thumbnail = edge.thumbnail;
+            if (thumbnail && !thumbnail.includes('http')) {
+                thumbnail = `https://wp.youtube-anime.com/aln.youtube-anime.com/${thumbnail}`;
+            }
+
+            return {
+                id: edge._id,   
+                name: edge.name,
+                thumbnail: thumbnail,
+            }
+        });
+        res.json(animes);
     } else {
         res.status(500).json({ error: 'Failed to fetch data' });
     }
