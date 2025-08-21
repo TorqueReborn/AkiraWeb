@@ -1,33 +1,25 @@
-import { useEffect, useState } from "react";
-import { AiFillRightCircle } from "react-icons/ai"
 import Cookies from "js-cookie";
+import { AiFillRightCircle } from "react-icons/ai"
 
-const Splash = () => {
-    const [showSplash, setShowSplash] = useState(false);
+interface SplashProps {
+    setSplashSeen: Function
+}
 
-    useEffect(() => {
-        const splashSeen = Cookies.get('splashSeen')
-        if (!splashSeen) {
-            setShowSplash(true);
-        }
-    }, []);
+const Splash = ({ setSplashSeen }: SplashProps) => {
 
     const handleClick = () => {
         Cookies.set('splashSeen', 'true')
-        window.location.reload();
-    }
-    if (!showSplash) {
-        return null;
+        setSplashSeen(true)
     }
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
+        <div className="flex flex-col items-center justify-center h-screen text-white">
             <h1 className="text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
                 Akira
             </h1>
             <p className="mb-5">By Ghost Reborn!!!</p>
             <button onClick={handleClick}>
-                <AiFillRightCircle className="text-5xl cursor-pointer"/>
+                <AiFillRightCircle className="text-5xl cursor-pointer" />
             </button>
         </div>
     )

@@ -1,12 +1,16 @@
 import Cookies from 'js-cookie'
 import { useState, type ChangeEvent, type FormEvent } from "react"
 
-interface LoginProps {
+interface Login {
     email: string,
     password: string
 }
 
-const login = async (data: LoginProps) => {
+interface LoginProps {
+    setIsLoggedIn: Function
+}
+
+const login = async (data: Login) => {
     const response = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -17,8 +21,9 @@ const login = async (data: LoginProps) => {
     return await response.json()
 }
 
-const Login = () => {
-    const [data, setData] = useState<LoginProps>({
+const Login = ({setIsLoggedIn}: LoginProps) => {
+
+    const [data, setData] = useState<Login>({
         email: '',
         password: ''
     })
@@ -28,7 +33,6 @@ const Login = () => {
             ...data,
             email: e.target.value
         })
-        console.log(data)
     }
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +47,7 @@ const Login = () => {
         const res = await login(data)
         if (res && res.success) {
             Cookies.set('token', res.token)
+            setIsLoggedIn(true)
         }
     }
 
