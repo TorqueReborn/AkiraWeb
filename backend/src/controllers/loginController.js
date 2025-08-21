@@ -1,19 +1,29 @@
 import express from 'express'
-import connectDB from '../config/connectDb.js'
 import User from '../models/userModel.js'
 
 const loginRouter = express.Router()
 
-loginRouter.get('/login', async (_, res) => {
-    const connect = await connectDB()
-    const newUser = User({
-        name: 'anything',
-        email: 'something',
-        password: 'something',
-    })
-    const savedUser = await newUser.save()
-    console.log(savedUser)
-    res.json(connect)
+loginRouter.post('/login', async (req, res) => {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+        res.json({ success: false, message: 'missing credentials' })
+    }
+
+    try {
+        const user = await User.findOne({ email })
+        if (!user) {
+            res.json({ success: false, message: 'unable to get user info' })
+        }
+
+        if (user.password === password) {
+            res.json({ success: true, message: 'Logged in successfully' })
+        } else {
+            res.json({ success: false, message: 'Invalid credentials' })
+        }
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+    }
 })
 
 export default loginRouter
