@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import { useState, type ChangeEvent, type FormEvent } from "react"
 
 interface LoginProps {
@@ -40,7 +41,9 @@ const Login = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         const res = await login(data)
-        console.log(res)
+        if (res && res.success) {
+            Cookies.set('token', res.token)
+        }
     }
 
     return (
