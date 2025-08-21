@@ -14,6 +14,7 @@ export const login = async (req, res) => {
         }
 
         if (user.password === password) {
+            res.cookie('isLoggedIn', true)
             return res.json({ success: true, message: 'Logged in successfully' })
         } else {
             return res.json({ success: false, message: 'Invalid credentials' })
