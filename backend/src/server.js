@@ -8,8 +8,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const API_BASE = 'https://api.allanime.day/api'
-
 app.use(cors({
     origin: 'http://localhost:5173'
 }));
