@@ -18,7 +18,7 @@ const Splash = ({ setSplashSeen }: SplashProps) => {
                 Akira
             </h1>
             <p className="mb-5">By Ghost Reborn!!!</p>
-            <button onClick={handleClick}>
+            <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400" onClick={handleClick}>
                 <AiFillRightCircle className="text-5xl cursor-pointer" />
             </button>
         </div>

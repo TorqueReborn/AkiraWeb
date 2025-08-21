@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div>
       {!splashSeen && <Splash setSplashSeen={setSplashSeen}/>}
-      {!isLoggedIn && <Login setIsLoggedIn={setIsLoggedIn}/>}
+      {(!isLoggedIn && splashSeen) && <Login setIsLoggedIn={setIsLoggedIn}/>}
     </div>
   )
 }
