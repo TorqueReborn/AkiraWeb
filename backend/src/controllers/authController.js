@@ -22,3 +22,22 @@ export const login = async (req, res) => {
         res.json({ success: false, message: error.message })
     }
 }
+
+export const register = async (req, res) => {
+    const { email, password } = req.body
+    if (!email || !password) {
+        res.json({ success: false, message: 'missing credentials' })
+    }
+
+    try {
+        const user = await User.findOne({ email })
+        if (user) {
+            return res.json({ success: false, message: 'User already exists' })
+        }
+        const newUser = User({ email, password })
+        await newUser.save()
+        res.json({ success: true, message: 'User successfully registered' })
+    } catch (error) {
+        res.json({ success: false, message: 'Unable to create new user' })
+    }
+}
