@@ -15,7 +15,7 @@ export const login = async (req, res) => {
         }
 
         if (user.password === password) {
-            const payload = {email: user.email, password: user.password}
+            const payload = { email: user.email, password: user.password }
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' })
             return res.json({ success: true, message: 'Logged in successfully', token: token })
         } else {
@@ -39,8 +39,10 @@ export const register = async (req, res) => {
         }
         const newUser = User({ email, password })
         await newUser.save()
-        return res.json({ success: true, message: 'User successfully registered' })
+        const payload = { email: newUser.email, password: newUser.password }
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' })
+        return res.json({ success: true, message: 'User successfully registered', token: token })
     } catch (error) {
-        return res.json({ success: false, message: 'Unable to create new user' })
+        return res.json({ success: false, message: 'Unable to create new user', error: error.message })
     }
 }
