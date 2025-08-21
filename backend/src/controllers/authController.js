@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 
 export const login = async (req, res) => {
@@ -14,8 +15,9 @@ export const login = async (req, res) => {
         }
 
         if (user.password === password) {
-            res.cookie('isLoggedIn', true)
-            return res.json({ success: true, message: 'Logged in successfully' })
+            const payload = {email: user.email, password: user.password}
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' })
+            return res.json({ success: true, message: 'Logged in successfully', token: token })
         } else {
             return res.json({ success: false, message: 'Invalid credentials' })
         }
