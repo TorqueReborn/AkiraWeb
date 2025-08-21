@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { AiFillRightCircle } from "react-icons/ai"
+import Cookies from "js-cookie";
 
 const Splash = () => {
     const [showSplash, setShowSplash] = useState(false);
 
     useEffect(() => {
-        const splashSeen = localStorage.getItem("splashSeen");
+        const splashSeen = Cookies.get('splashSeen')
         if (!splashSeen) {
             setShowSplash(true);
         }
     }, []);
 
     const handleClick = () => {
-        localStorage.setItem("splashSeen", "true");
+        Cookies.set('splashSeen', 'true')
         window.location.reload();
     }
     if (!showSplash) {
