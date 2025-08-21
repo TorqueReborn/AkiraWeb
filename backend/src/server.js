@@ -1,16 +1,15 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import { connectAllAnime } from './util.js';
-import loginRouter from './controllers/loginController.js';
 import connectDB from './config/connectDb.js';
+import authRouter from './routers/authRouter.js';
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json())
-app.use(cors({origin: 'http://localhost:5173'}));
+app.use(cors({ origin: 'http://localhost:5173' }));
 
 connectDB()
 
@@ -19,8 +18,8 @@ app.listen(PORT, () => {
 });
 
 app.get('/', async (_, res) => {
-    res.json({success: true, message: 'Welcome to Akira API'})
+    res.json({ success: true, message: 'Welcome to Akira API' })
 })
 
 // Controllers
-app.use('/api/auth', loginRouter)
+app.use('/api/auth', authRouter)

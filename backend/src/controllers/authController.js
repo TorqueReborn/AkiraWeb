@@ -1,9 +1,6 @@
-import express from 'express'
 import User from '../models/userModel.js'
 
-const loginRouter = express.Router()
-
-loginRouter.post('/login', async (req, res) => {
+export const login = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -24,6 +21,4 @@ loginRouter.post('/login', async (req, res) => {
     } catch (error) {
         res.json({ success: false, message: error.message })
     }
-})
-
-export default loginRouter
+}
