@@ -46,3 +46,14 @@ export const register = async (req, res) => {
         return res.json({ success: false, message: 'Unable to create new user', error: error.message })
     }
 }
+
+export const verify = (req, res) => {
+    const { token } = req.body
+    jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
+        if (err) {
+            return res.json({success: false, message: err.message})
+        } else {
+            return res.json({success: true, message: authData})
+        }
+    })
+}
