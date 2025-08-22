@@ -1,8 +1,8 @@
 import express from 'express'
-import {test} from '../controllers/animeController.js'
+import {add} from '../controllers/animeController.js'
 
 const animeRouter = express.Router()
 
-animeRouter.post('/', test)
+animeRouter.post('/add', add)
 
 export default animeRouter
