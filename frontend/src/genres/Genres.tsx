@@ -8,7 +8,7 @@ const Genres = () => {
 
     const handleClick = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/auth/updateUser`, {
+            await fetch(`http://localhost:3000/api/auth/updateUser`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
