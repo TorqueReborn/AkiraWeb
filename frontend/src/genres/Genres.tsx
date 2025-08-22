@@ -1,20 +1,13 @@
 import { AiFillRightCircle } from 'react-icons/ai'
 import Card from './components/Card'
 import { useState } from 'react'
-import Cookies from 'js-cookie'
 
 const Genres = () => {
     const [selectedGenres, setSelectedGenres] = useState([])
 
     const handleClick = async () => {
         try {
-            await fetch(`http://localhost:3000/api/auth/updateUser`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({token: Cookies.get('token'), genres: selectedGenres})
-            })
+            console.log(selectedGenres)
         } catch (error) {
             console.log(error)
         }
