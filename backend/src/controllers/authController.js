@@ -5,7 +5,7 @@ import User from '../models/userModel.js'
 
 const generateToken = ({ email }) => {
     const payload = { email }
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15s' })
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1s' })
 }
 
 export const login = async (req, res) => {
