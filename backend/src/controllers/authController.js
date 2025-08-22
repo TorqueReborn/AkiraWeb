@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
 const generateToken = ({ email }) => {
     const payload = { email }
@@ -23,7 +24,8 @@ export const login = async (req, res) => {
             return res.status(404).json({ success: false, message: 'user not registered' })
         }
 
-        if (user.password === password) {
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (isMatch) {
             const token = generateToken({ email })
             user.token = token
             await user.save()
@@ -56,7 +58,9 @@ export const register = async (req, res) => {
             return res.status(404).json({ success: false, message: 'User already exists' })
         }
         const token = generateToken({ email })
-        const newUser = User({ email, password, token })
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt)
+        const newUser = User({ email, password: hashedPassword, token })
         await newUser.save()
 
         return res.json({ success: true, message: 'User successfully registered', token: token })
