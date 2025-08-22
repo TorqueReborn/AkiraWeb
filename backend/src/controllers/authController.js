@@ -46,24 +46,3 @@ export const register = async (req, res) => {
         return res.json({ success: false, message: 'Unable to create new user', error: error.message })
     }
 }
-
-export const verify = (req, res) => {
-    const { token } = req.body
-    jwt.verify(token, process.env.JWT_SECRET, async (err, authData) => {
-        if (err) {
-            return res.json({ success: false, message: err.message })
-        } else {
-            const { email, password } = authData
-            const user = await User.findOne({ email })
-            if (!user) {
-                return res.json({ success: false, message: 'unable to get user info' })
-            }
-
-            if (user.password === password) {
-                return res.json({ success: true, message: 'Token Valid', user_id: user._id })
-            } else {
-                return res.json({success: false, message: 'Invalid credentials'})
-            }
-        }
-    })
-}
