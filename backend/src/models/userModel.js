@@ -5,13 +5,15 @@ const animeSchema = new Schema({
         type: String,
         required: true
     },
-    title: {
+    status: {
         type: String,
+        enum: ['watching', 'completed'],
         required: true
     },
-    thumbnail: {
-        type: String,
-        required: true
+    progress: {
+        type: Number,
+        required: false,
+        default: 0
     }
 })
 
@@ -29,10 +31,7 @@ const userSchema = new Schema({
         required: false, 
         default: null
     },
-    anime: {
-        watching: [animeSchema],
-        completed: [animeSchema]
-    }
+    anime: [animeSchema]
 })
 
 const User = mongoose.model('User', userSchema)
