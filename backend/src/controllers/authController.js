@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
+import mongoose from 'mongoose'
 
-const generateToken = ({ email, password }) => {
-    const payload = { email, password }
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '10m' })
+const generateToken = ({ email }) => {
+    const payload = { email }
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15s' })
 }
 
 export const login = async (req, res) => {
@@ -14,59 +15,55 @@ export const login = async (req, res) => {
     }
 
     try {
+        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        console.log('Connected to database users')
+
         const user = await User.findOne({ email })
         if (!user) {
             return res.status(404).json({ success: false, message: 'user not registered' })
         }
 
         if (user.password === password) {
-            return res.json({ success: true, message: 'Logged in successfully', token: generateToken({ email, password }) })
+            const token = generateToken({ email })
+            user.token = token
+            await user.save()
+            return res.json({ success: true, message: 'Logged in successfully', token: token })
         } else {
             return res.status(404).json({ success: false, message: 'Invalid Password' })
         }
-    } catch (error) {
-        return res.status(404).json({ success: false, message: error.message })
+
+    } catch (err) {
+        return res.json({ successs: false, message: 'Unable to connect to database' })
+    } finally {
+        await mongoose.disconnect()
+        console.log('Disconnected from users database')
     }
 }
 
 export const register = async (req, res) => {
     const { email, password } = req.body
+
     if (!email || !password) {
         return res.status(404).json({ success: false, message: 'missing credentials' })
     }
 
     try {
+        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        console.log('Connected to database users')
+
         const user = await User.findOne({ email })
         if (user) {
             return res.status(404).json({ success: false, message: 'User already exists' })
         }
-        const newUser = User({ email, password })
+        const token = generateToken({ email })
+        const newUser = User({ email, password, token })
         await newUser.save()
-        return res.json({ success: true, message: 'User successfully registered', token: generateToken({ email, password }) })
+
+        return res.json({ success: true, message: 'User successfully registered', token: token })
     } catch (error) {
         return res.status(404).json({ success: false, message: 'Unable to create new user', error: error.message })
+    } finally {
+        await mongoose.disconnect()
+        console.log('Disconnected from users database')
     }
-}
-
-export const updateUserGenre = async (req, res) => {
-    const { token, genres } = req.body
-    const decoded = jwt.verify(token, process.env.JWT_SECRET, async (err, authData) => {
-        if (err) {
-            return res.status(404).json({ success: false, err: 'Token Expired' })
-        } else {
-            const { email, password } = authData
-            if (!email || !password) {
-                return res.status(404).json({ success: false, message: 'missing credentials' })
-            }
-
-            const user = await User.findOne({ email })
-            if (user.password === password) {
-                user.genres = genres
-                user.save()
-                return res.json({success: true, message: 'User genre updated successfully'})
-            } else {
-                return res.status(404).json({ success: false, message: 'Invalid Password' })
-            }
-        }
-    })
 }
