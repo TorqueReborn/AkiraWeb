@@ -42,10 +42,6 @@ const Login = ({ setIsLoggedIn }: LoginProps) => {
         })
     }
 
-    const handleSignUpChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setIsSignup(e.target.value === 'signup')
-    }
-
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         const res = await login(data, isSignUp)
@@ -59,14 +55,8 @@ const Login = ({ setIsLoggedIn }: LoginProps) => {
         <div className='h-screen flex justify-center items-center'>
             <div className='bg-gray-800 items-center justify-center flex flex-col p-12 rounded-xl'>
                 <div className="flex gap-2">
-                    <label className={`${!isSignUp ? 'bg-gray-700': ''} px-4 py-2 rounded-xl`}>
-                        Login
-                        <input className='hidden' type="radio" name="sign" id="login" value="login" onChange={handleSignUpChange} />
-                    </label>
-                    <label className={`${isSignUp ? 'bg-gray-700': ''} px-4 py-2 rounded-xl`}>
-                        SignUp
-                        <input className='hidden' type="radio" name="sign" id="signup" value="signup" onChange={handleSignUpChange} />
-                    </label>
+                    <button className={`${!isSignUp && 'bg-gray-700'} px-4 py-2 rounded-xl outline-none focus:ring-1`} onClick={() => setIsSignup(false)}>Login</button>
+                    <button className={`${isSignUp && 'bg-gray-700'} px-4 py-2 rounded-xl outline-none focus:ring-1`} onClick={() => setIsSignup(true)}>SignUp</button>
                 </div>
                 <input className='mt-8 text-center outline-none border-b-1 w-8/10' type="text" placeholder='Enter email' onChange={handleEmailChange} /><br />
                 <input className='mt-6 text-center outline-none border-b-1 w-8/10' type="password" placeholder='Enter password' onChange={handlePasswordChange} />
