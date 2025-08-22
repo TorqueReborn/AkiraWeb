@@ -1,7 +1,7 @@
+import Cookies from 'js-cookie'
 import { useState } from "react";
 import Login from "./login/Login";
 import Splash from "./splash/Splash"
-import Cookies from 'js-cookie'
 import Genres from "./genres/Genres";
 
 const App = () => {

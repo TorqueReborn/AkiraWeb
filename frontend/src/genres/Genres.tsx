@@ -1,6 +1,6 @@
-import { AiFillRightCircle } from 'react-icons/ai'
-import Card from './components/Card'
 import { useState } from 'react'
+import Card from './components/Card'
+import { AiFillRightCircle } from 'react-icons/ai'
 
 const Genres = () => {
     const [selectedGenres, setSelectedGenres] = useState([])

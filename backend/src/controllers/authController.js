@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken'
-import User from '../models/userModel.js'
-import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
+import User from '../models/userModel.js'
 
 const generateToken = ({ email }) => {
     const payload = { email }
@@ -57,9 +57,11 @@ export const register = async (req, res) => {
         if (user) {
             return res.status(404).json({ success: false, message: 'User already exists' })
         }
-        const token = generateToken({ email })
+        
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
+        
+        const token = generateToken({ email })
         const newUser = User({ email, password: hashedPassword, token })
         await newUser.save()
 
