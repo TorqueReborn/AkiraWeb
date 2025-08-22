@@ -16,15 +16,13 @@ const Card = ({ name, thumbnail, genre }: CardProps) => {
     }
 
     return (
-        <button className="focus:outline-none focus:scale-110 w-full bg-gray-700 rounded" onClick={handleClick}>
-            <h1 className="bg-gray-900 pb-2 text-xl">{genre}</h1>
-            <div>
-                <div className="relative">
-                    <img className='w-48 h-72 rounded-t' src={thumbnail} alt="Anime Image" />
-                    <IoMdCheckmarkCircle className={`absolute top-0 right-0 text-white bg-gray-800 h-8 w-8 p-1 ${!checked && 'hidden'}`} />
-                </div>
-                <h1 className='p-2 italic font-medium w-48 line-clamp-1 text-center text-xl'>{name}</h1>
+        <button className="focus:outline-none focus:scale-110 bg-gray-700 rounded" onClick={handleClick}>
+            <h1 className="bg-gray-900 pb-4 text-xl">{genre}</h1>
+            <div className="relative">
+                <img className='w-48 h-72 rounded-t' src={thumbnail} alt="Anime Image" />
+                <IoMdCheckmarkCircle className={`absolute top-0 right-0 text-white bg-gray-800 h-8 w-8 p-1 ${!checked && 'hidden'}`} />
             </div>
+            <h1 className='p-2 italic font-medium w-48 line-clamp-1 text-center text-xl'>{name}</h1>
         </button>
     )
 }
