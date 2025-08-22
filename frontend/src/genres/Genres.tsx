@@ -1,9 +1,24 @@
 import { AiFillRightCircle } from 'react-icons/ai'
 import Card from './components/Card'
 import { useState } from 'react'
+import Cookies from 'js-cookie'
 
 const Genres = () => {
     const [selectedGenres, setSelectedGenres] = useState([])
+
+    const handleClick = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/auth/updateUser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({token: Cookies.get('token'), genres: selectedGenres})
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div className="flex flex-col h-screen items-center justify-center">
@@ -17,7 +32,7 @@ const Genres = () => {
                 <Card name="Berserk" thumbnail="https://wp.youtube-anime.com/s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21560-6iifjdssfebJ.jpg?w=250" genre="Seinen " setSelectedGenres={setSelectedGenres} />
                 <Card name="Sailor Moon" thumbnail="https://wp.youtube-anime.com/s4.anilist.co/file/anilistcdn/media/anime/cover/large/nx530-I0XN6WzeBtAg.jpg?w=250" genre="Shoujo" setSelectedGenres={setSelectedGenres} />
             </div>
-            <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400 mt-20" onClick={() => console.log(selectedGenres)}>
+            <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400 mt-20" onClick={handleClick}>
                 <AiFillRightCircle className="text-5xl cursor-pointer" />
             </button>
         </div>

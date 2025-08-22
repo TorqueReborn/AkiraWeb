@@ -3,7 +3,7 @@ import User from '../models/userModel.js'
 
 const generateToken = ({ email, password }) => {
     const payload = { email, password }
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1m' })
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '10m' })
 }
 
 export const login = async (req, res) => {
@@ -46,4 +46,27 @@ export const register = async (req, res) => {
     } catch (error) {
         return res.status(404).json({ success: false, message: 'Unable to create new user', error: error.message })
     }
+}
+
+export const updateUserGenre = async (req, res) => {
+    const { token, genres } = req.body
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, async (err, authData) => {
+        if (err) {
+            return res.status(404).json({ success: false, err: 'Token Expired' })
+        } else {
+            const { email, password } = authData
+            if (!email || !password) {
+                return res.status(404).json({ success: false, message: 'missing credentials' })
+            }
+
+            const user = await User.findOne({ email })
+            if (user.password === password) {
+                user.genres = genres
+                user.save()
+                return res.json({success: true, message: 'User genre updated successfully'})
+            } else {
+                return res.status(404).json({ success: false, message: 'Invalid Password' })
+            }
+        }
+    })
 }
