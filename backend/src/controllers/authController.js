@@ -5,13 +5,13 @@ export const login = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
-        return res.json({ success: false, message: 'missing credentials' })
+        return res.status(404).json({ success: false, message: 'missing credentials' })
     }
 
     try {
         const user = await User.findOne({ email })
         if (!user) {
-            return res.json({ success: false, message: 'unable to get user info' })
+            return res.status(404).json({ success: false, message: 'user not registered' })
         }
 
         if (user.password === password) {
@@ -19,23 +19,23 @@ export const login = async (req, res) => {
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1m' })
             return res.json({ success: true, message: 'Logged in successfully', token: token })
         } else {
-            return res.json({ success: false, message: 'Invalid credentials' })
+            return res.status(404).json({ success: false, message: 'Invalid Password' })
         }
     } catch (error) {
-        return res.json({ success: false, message: error.message })
+        return res.status(404).json({ success: false, message: error.message })
     }
 }
 
 export const register = async (req, res) => {
     const { email, password } = req.body
     if (!email || !password) {
-        return res.json({ success: false, message: 'missing credentials' })
+        return res.status(404).json({ success: false, message: 'missing credentials' })
     }
 
     try {
         const user = await User.findOne({ email })
         if (user) {
-            return res.json({ success: false, message: 'User already exists' })
+            return res.status(404).json({ success: false, message: 'User already exists' })
         }
         const newUser = User({ email, password })
         await newUser.save()
@@ -43,6 +43,6 @@ export const register = async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1m' })
         return res.json({ success: true, message: 'User successfully registered', token: token })
     } catch (error) {
-        return res.json({ success: false, message: 'Unable to create new user', error: error.message })
+        return res.status(404).json({ success: false, message: 'Unable to create new user', error: error.message })
     }
 }
