@@ -1,5 +1,7 @@
+const API_BASE = 'https://api.allanime.day/api'
+const requiredData = '_id,name'
+
 const connectAndFetchJson = async (variables, query) => {
-    const API_BASE = 'https://api.allanime.day/api'
     const url = `${API_BASE}?variables=${variables}&query=${query}`
     try {
         const response = await fetch(url, { headers: { 'Referer': 'https:allmanga.to' } })
@@ -17,11 +19,14 @@ const connectAndFetchJson = async (variables, query) => {
 
 export const animeByID = async (req, res) => {
     const variables = `{"id":"${req.params.id}"}`
-    const query = `query($id:String!){show(_id:$id){_id,name}}`
+    const query = `query($id:String!){show(_id:$id){${requiredData}}}`
     const data = await connectAndFetchJson(variables, query)
     return res.json(data)
 }
 
-export const animeTrending = async (req, res) => {
-    return res.json({success: true})
+export const animeTrending = async (_, res) => {
+    const variables = `{"type":"anime","size":10,"dateRange":1}`
+    const query = `query($type:VaildPopularTypeEnumType!,$size:Int!,$dateRange:Int!){queryPopular(type:$type,size:$size,dateRange:$dateRange){recommendations{anyCard{${requiredData}}}}}`
+    const data = await connectAndFetchJson(variables, query)
+    return res.json(data)
 }
