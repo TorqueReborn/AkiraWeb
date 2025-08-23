@@ -21,3 +21,7 @@ export const animeByID = async (req, res) => {
     const data = await connectAndFetchJson(variables, query)
     return res.json(data)
 }
+
+export const animeTrending = async (req, res) => {
+    return res.json({success: true})
+}
