@@ -2,7 +2,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import authRouter from './routers/authRouter.js';
-import animeRouter from './routers/animeRouter.js';
+import userAnimeRouter from './routers/userAnimeRouter.js';
 
 dotenv.config();
 const app = express();
@@ -21,4 +21,4 @@ app.get('/', async (_, res) => {
 
 // Controllers
 app.use('/api/auth', authRouter)
-app.use('/api/user', animeRouter)
+app.use('/api/user', userAnimeRouter)
