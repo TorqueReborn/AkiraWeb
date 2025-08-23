@@ -1,8 +1,9 @@
 import express from 'express'
-import {add} from '../controllers/animeController.js'
+import { addAnime, deleteAnime } from '../controllers/animeController.js'
 
 const animeRouter = express.Router()
 
-animeRouter.post('/add', add)
+animeRouter.post('/addAnime', addAnime)
+animeRouter.post('/deleteAnime', deleteAnime)
 
 export default animeRouter
