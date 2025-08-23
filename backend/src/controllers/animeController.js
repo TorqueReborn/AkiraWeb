@@ -22,6 +22,13 @@ export const animeByID = async (req, res) => {
     return res.json(data)
 }
 
+export const animeByIDs = async (req, res) => {
+    const variables = `{"id":"${req.params.id}"}`
+    const query = `query($id:String!){show(_id:$id){${requiredData}}}`
+    const data = await connectAndFetchJson(variables, query)
+    return res.json(data)
+}
+
 export const animeTrending = async (_, res) => {
     const variables = `{"type":"anime","size":10,"dateRange":1}`
     const query = `query($type:VaildPopularTypeEnumType!,$size:Int!,$dateRange:Int!){queryPopular(type:$type,size:$size,dateRange:$dateRange){recommendations{anyCard{${requiredData}}}}}`
@@ -29,7 +36,7 @@ export const animeTrending = async (_, res) => {
     return res.json(data)
 }
 
-export const animeVideo = async (req, res) => {
+export const animeEpisode = async (req, res) => {
     const variables = `{"showId": "${req.params.id}","episodeString":"${req.params.episode}","translationType": "sub"}`
     const query = `query($showId:String!,$episodeString:String!,$translationType:VaildTranslationTypeEnumType!){episode(showId:$showId,episodeString:$episodeString,translationType:$translationType){episodeInfo {vidInforssub}}}`
     const data = await connectAndFetchJson(variables, query)

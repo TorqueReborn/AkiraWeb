@@ -22,5 +22,5 @@ app.get('/', async (_, res) => {
 
 // Controllers
 app.use('/api/auth', authRouter)
-app.use('/api/animes', animeRouter)
+app.use('/api/anime', animeRouter)
 app.use('/api/user', userAnimeRouter)
