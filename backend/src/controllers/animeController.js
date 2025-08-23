@@ -5,11 +5,9 @@ const connectAndFetchJson = async (variables, query) => {
     const url = `${API_BASE}?variables=${variables}&query=${query}`
     try {
         const response = await fetch(url, { headers: { 'Referer': 'https:allmanga.to' } })
-        
         if (!response.ok) {
             return { success: false, message: 'Unable to retrieve anime' }
         }
-
         const data = await response.json()
         return data
     } catch (error) {
@@ -27,6 +25,13 @@ export const animeByID = async (req, res) => {
 export const animeTrending = async (_, res) => {
     const variables = `{"type":"anime","size":10,"dateRange":1}`
     const query = `query($type:VaildPopularTypeEnumType!,$size:Int!,$dateRange:Int!){queryPopular(type:$type,size:$size,dateRange:$dateRange){recommendations{anyCard{${requiredData}}}}}`
+    const data = await connectAndFetchJson(variables, query)
+    return res.json(data)
+}
+
+export const animeVideo = async (req, res) => {
+    const variables = `{"showId": "${req.params.id}","episodeString":"${req.params.episode}","translationType": "sub"}`
+    const query = `query($showId:String!,$episodeString:String!,$translationType:VaildTranslationTypeEnumType!){episode(showId:$showId,episodeString:$episodeString,translationType:$translationType){episodeInfo {vidInforssub}}}`
     const data = await connectAndFetchJson(variables, query)
     return res.json(data)
 }
