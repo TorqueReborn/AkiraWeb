@@ -59,7 +59,7 @@ const Login = ({ setShowLogin }: Loginprops) => {
 
     return (
         <div>
-            {showSuggestions ? <Suggestions /> : <div className='h-screen flex justify-center items-center'>
+            {showSuggestions ? <Suggestions setShowLogin={setShowLogin} /> : <div className='h-screen flex justify-center items-center'>
                 <div className='bg-gray-800 items-center justify-center flex flex-col p-12 rounded-xl'>
                     <div className="flex gap-2">
                         <button className={`${!isSignUp && 'bg-gray-700'} px-4 py-2 rounded-xl outline-none focus:ring-1`} onClick={() => setIsSignup(false)}>Login</button>
