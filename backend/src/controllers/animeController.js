@@ -1,4 +1,4 @@
-const requiredData = '_id,name'
+const requiredData = '_id,englishName,thumbnail'
 const API_BASE = 'https://api.allanime.day/api'
 
 const connectAndFetchJson = async (variables, query) => {
@@ -35,7 +35,7 @@ export const animeTrending = async (_, res) => {
     const variables = `{"type":"anime","size":10,"dateRange":1}`
     const query = `query($type:VaildPopularTypeEnumType!,$size:Int!,$dateRange:Int!){queryPopular(type:$type,size:$size,dateRange:$dateRange){recommendations{anyCard{${requiredData}}}}}`
     const data = await connectAndFetchJson(variables, query)
-    return res.json(data.data.queryPopular.recommendations)
+    return res.json(data.data.queryPopular.recommendations.map(recommend => recommend.anyCard))
 }
 
 export const animeEpisode = async (req, res) => {
