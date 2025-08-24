@@ -2,7 +2,11 @@ import mongoose from "mongoose"
 import User from "../models/userModel.js"
 
 export const addAnime = async (req, res) => {
-    const { token, id, status = 'watching', progress = 0 } = req.body
+    const { token, ids, status = 'watching', progress = 0 } = req.body
+
+    console.log(ids)
+
+    return res.json({success: true})
 
     if (!token || !id) {
         return res.status(404).json({ success: false, message: 'Missing parameters' })

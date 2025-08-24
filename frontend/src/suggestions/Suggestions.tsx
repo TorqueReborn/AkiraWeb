@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Card from './components/Card'
 import { AiFillRightCircle } from 'react-icons/ai'
+import Cookies from 'js-cookie'
 
 interface Anime {
     _id: string,
@@ -24,6 +25,10 @@ const Suggestions = () => {
         fetchData()
     }, [])
 
+    const handleClick = () => {
+        console.log(saved)
+    }
+
     return (
         <div className="flex flex-col h-screen items-center justify-center">
             <div className="text-3xl mb-20">
@@ -33,7 +38,7 @@ const Suggestions = () => {
                 {(data.map((d: Anime) => (<div key={d._id}><Card id={d._id} name={d.englishName} thumbnail={d.thumbnail} setSaved={setSaved} /></div>)))}
                 {loading && Array.from({ length: 5 }, (_, i) => <div key={i}><Card id='null' name='Loading...' thumbnail='null'  setSaved={setSaved} /></div>)}
             </div>
-            <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400 mt-20" onClick={() => console.log(saved)}>
+            <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400 mt-20" onClick={handleClick}>
                 <AiFillRightCircle className="text-5xl cursor-pointer" />
             </button>
         </div>
