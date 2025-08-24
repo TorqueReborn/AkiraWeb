@@ -2,14 +2,14 @@ import Cookies from "js-cookie";
 import { AiFillRightCircle } from "react-icons/ai"
 
 interface SplashProps {
-    setSplashSeen: Function
+    setShowSplash: Function
 }
 
-const Splash = ({ setSplashSeen }: SplashProps) => {
+const Splash = ({ setShowSplash }: SplashProps) => {
 
     const handleClick = () => {
         Cookies.set('splashSeen', 'true')
-        setSplashSeen(true)
+        setShowSplash(false)
     }
 
     return (

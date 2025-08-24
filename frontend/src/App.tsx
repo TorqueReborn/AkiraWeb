@@ -4,12 +4,13 @@ import Login from "./login/Login";
 import Splash from "./splash/Splash"
 
 const App = () => {
-  const [splashSeen, setSplashSeen] = useState(Cookies.get('splashSeen'))
+  const [showSplash, setShowSplash] = useState(!Cookies.get('splashSeen'))
+  const [showLogin, setShowLogin] = useState(!Cookies.get('token'))
 
   return (
     <div>
-      {!splashSeen && <Splash setSplashSeen={setSplashSeen} />}
-      {(splashSeen) && <Login />}
+      {showSplash && <Splash setShowSplash={setShowSplash} />}
+      {showLogin && <Login setShowLogin={setShowLogin} />}
     </div>
   )
 }

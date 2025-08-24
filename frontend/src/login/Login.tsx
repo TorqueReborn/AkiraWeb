@@ -7,6 +7,10 @@ interface Login {
     password: string
 }
 
+interface Loginprops {
+    setShowLogin: Function
+}
+
 const login = async (data: Login, isSignUp: boolean) => {
     const response = await fetch(`http://localhost:3000/api/auth/${isSignUp ? 'register' : 'login'}`, {
         method: 'POST',
@@ -18,7 +22,7 @@ const login = async (data: Login, isSignUp: boolean) => {
     return await response.json()
 }
 
-const Login = () => {
+const Login = ({ setShowLogin }: Loginprops) => {
     const [isSignUp, setIsSignup] = useState(false)
     const [showSuggestions, setShowSuggestions] = useState(false)
     const [data, setData] = useState<Login>({
@@ -45,6 +49,7 @@ const Login = () => {
         const res = await login(data, isSignUp)
         if (res && res.success) {
             Cookies.set('token', res.token)
+            setShowLogin(false)
             if (isSignUp) {
                 setShowSuggestions(true)
             }
