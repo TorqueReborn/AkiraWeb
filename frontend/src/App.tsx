@@ -6,13 +6,11 @@ import Genres from "./genres/Genres";
 
 const App = () => {
   const [splashSeen, setSplashSeen] = useState(Cookies.get('splashSeen'))
-  const [isLoggedIn, setIsLoggedIn] = useState(Cookies.get('token'))
 
   return (
     <div>
       {!splashSeen && <Splash setSplashSeen={setSplashSeen} />}
-      {(!isLoggedIn && splashSeen) && <Login setIsLoggedIn={setIsLoggedIn} />}
-      {(isLoggedIn && splashSeen) && <Genres />}
+      {(splashSeen) && <Login />}
     </div>
   )
 }
