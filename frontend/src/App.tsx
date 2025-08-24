@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import { useState } from "react";
 import Login from "./login/Login";
 import Splash from "./splash/Splash"
-import Genres from "./genres/Genres";
+import Suggestions from "./suggestions/Suggestions";
 
 const App = () => {
   const [splashSeen, setSplashSeen] = useState(Cookies.get('splashSeen'))

@@ -8,7 +8,7 @@ interface Anime {
     thumbnail: string
 }
 
-const Genres = () => {
+const Suggestions = () => {
     const [data, setData] = useState<Anime[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -29,8 +29,8 @@ const Genres = () => {
                 What anime do you like?
             </div>
             <div className="flex gap-10">
-                {(data.map((d:Anime) => (<div key={d._id}><Card name={d.englishName} thumbnail={d.thumbnail}/></div>)))}
-                {loading && Array.from({length:5}, (_,i) => <div key={i}><Card name='Loading...' thumbnail=''/></div>)}
+                {(data.map((d: Anime) => (<div key={d._id}><Card name={d.englishName} thumbnail={d.thumbnail} /></div>)))}
+                {loading && Array.from({ length: 5 }, (_, i) => <div key={i}><Card name='Loading...' thumbnail='' /></div>)}
             </div>
             <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400 mt-20">
                 <AiFillRightCircle className="text-5xl cursor-pointer" />
@@ -39,4 +39,4 @@ const Genres = () => {
     )
 }
 
-export default Genres
+export default Suggestions

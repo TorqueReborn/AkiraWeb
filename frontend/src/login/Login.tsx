@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import Genres from '../genres/Genres'
+import Suggestions from '../suggestions/Suggestions'
 
 interface Login {
     email: string,
@@ -53,7 +53,7 @@ const Login = () => {
 
     return (
         <div>
-            {showSuggestions ? <Genres /> : <div className='h-screen flex justify-center items-center'>
+            {showSuggestions ? <Suggestions /> : <div className='h-screen flex justify-center items-center'>
                 <div className='bg-gray-800 items-center justify-center flex flex-col p-12 rounded-xl'>
                     <div className="flex gap-2">
                         <button className={`${!isSignUp && 'bg-gray-700'} px-4 py-2 rounded-xl outline-none focus:ring-1`} onClick={() => setIsSignup(false)}>Login</button>
