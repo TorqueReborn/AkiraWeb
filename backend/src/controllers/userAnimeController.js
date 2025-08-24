@@ -4,11 +4,7 @@ import User from "../models/userModel.js"
 export const addAnime = async (req, res) => {
     const { token, ids, status = 'watching', progress = 0 } = req.body
 
-    console.log(ids)
-
-    return res.json({success: true})
-
-    if (!token || !id) {
+    if (!token || !ids) {
         return res.status(404).json({ success: false, message: 'Missing parameters' })
     }
 
@@ -18,29 +14,31 @@ export const addAnime = async (req, res) => {
 
         const user = await User.findOne({ token })
         if (user) {
-            const anime = await User.findOne({ token, "anime.id": id })
-            if (anime) {
-                await User.findOneAndUpdate(
-                    {
-                        token,
-                        "anime.id": id
-                    },
-                    {
-                        "$set": {
-                            "anime.$[elem].status": status,
-                            "anime.$[elem].progress": progress
+            for (const id of ids) {
+                const anime = await User.findOne({ token, "anime.id": id })
+                if (anime) {
+                    await User.findOneAndUpdate(
+                        {
+                            token,
+                            "anime.id": id
+                        },
+                        {
+                            "$set": {
+                                "anime.$[elem].status": status,
+                                "anime.$[elem].progress": progress
+                            }
+                        },
+                        {
+                            new: true,
+                            arrayFilters: [{ "elem.id": id }]
                         }
-                    },
-                    {
-                        new: true,
-                        arrayFilters: [{ "elem.id": id }]
-                    }
-                )
-            } else {
-                user.anime.push({ id, status, progress })
-                await user.save()
+                    )
+                } else {
+                    user.anime.push({ id, status, progress })
+                    await user.save()
+                }
             }
-            return res.json({ success: true, message: 'User anime approved' })
+            return res.json({ success: true, message: 'User anime(s) approved' })
         } else {
             return res.json({ success: false, message: 'Invalid Token Sign in again' })
         }
@@ -65,7 +63,7 @@ export const deleteAnime = async (req, res) => {
 
         const user = await User.findOne({ token })
         if (user) {
-            user.anime.pull({id})
+            user.anime.pull({ id })
             await user.save()
             return res.json({ success: true, message: 'User anime deleted' })
         } else {
