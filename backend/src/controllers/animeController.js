@@ -23,8 +23,10 @@ export const animeByID = async (req, res) => {
 }
 
 export const animeByIDs = async (req, res) => {
-    const variables = `{"id":"${req.params.id}"}`
-    const query = `query($id:String!){show(_id:$id){${requiredData}}}`
+    let {shows} = req.body
+    shows = shows.map(show => `"${show}"`)
+    const variables = `{"shows":[${shows}]}`
+    const query = `query($shows:[String!]!){showsWithIds(ids:$shows){_id,name}}`
     const data = await connectAndFetchJson(variables, query)
     return res.json(data)
 }

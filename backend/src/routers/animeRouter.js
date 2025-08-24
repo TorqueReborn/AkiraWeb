@@ -3,7 +3,7 @@ import { animeByID, animeByIDs, animeTrending, animeEpisode } from '../controlle
 
 const animeRouter = express.Router()
 
-animeRouter.get('/ids', animeByIDs)
+animeRouter.post('/ids', animeByIDs)
 animeRouter.get('/trending', animeTrending)
 
 animeRouter.get('/:id', animeByID)
