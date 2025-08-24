@@ -2,15 +2,24 @@ import { useState } from "react"
 import { IoMdCheckmarkCircle } from "react-icons/io"
 
 interface CardProps {
+    id: string,
     name: string,
-    thumbnail: string
+    thumbnail: string,
+    setSaved: Function
 }
 
-const Card = ({ name, thumbnail }: CardProps) => {
+const Card = ({ id, name, thumbnail, setSaved }: CardProps) => {
     const [selected, setSelected] = useState(false)
 
     const handleClick = () => {
         setSelected(!selected)
+        setSaved((saved: string[]) => {
+            if (saved.includes(id)) {
+                return saved.filter(s => s !== id)
+            } else {
+                return [...saved, id]
+            }
+        })
     }
 
     return (

@@ -49,9 +49,10 @@ const Login = ({ setShowLogin }: Loginprops) => {
         const res = await login(data, isSignUp)
         if (res && res.success) {
             Cookies.set('token', res.token)
-            setShowLogin(false)
             if (isSignUp) {
                 setShowSuggestions(true)
+            } else {
+                setShowLogin(false)
             }
         }
     }

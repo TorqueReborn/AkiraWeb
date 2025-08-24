@@ -10,6 +10,7 @@ interface Anime {
 
 const Suggestions = () => {
     const [data, setData] = useState<Anime[]>([])
+    const [saved, setSaved] = useState<string[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -29,10 +30,10 @@ const Suggestions = () => {
                 What anime do you like?
             </div>
             <div className="flex gap-10">
-                {(data.map((d: Anime) => (<div key={d._id}><Card name={d.englishName} thumbnail={d.thumbnail} /></div>)))}
-                {loading && Array.from({ length: 5 }, (_, i) => <div key={i}><Card name='Loading...' thumbnail='' /></div>)}
+                {(data.map((d: Anime) => (<div key={d._id}><Card id={d._id} name={d.englishName} thumbnail={d.thumbnail} setSaved={setSaved} /></div>)))}
+                {loading && Array.from({ length: 5 }, (_, i) => <div key={i}><Card id='null' name='Loading...' thumbnail='null'  setSaved={setSaved} /></div>)}
             </div>
-            <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400 mt-20">
+            <button className="rounded-full focus:outline-none focus:ring-1 focus:ring-gray-400 mt-20" onClick={() => console.log(saved)}>
                 <AiFillRightCircle className="text-5xl cursor-pointer" />
             </button>
         </div>
