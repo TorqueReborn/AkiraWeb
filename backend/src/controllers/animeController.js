@@ -1,5 +1,5 @@
-const API_BASE = 'https://api.allanime.day/api'
 const requiredData = '_id,name'
+const API_BASE = 'https://api.allanime.day/api'
 
 const connectAndFetchJson = async (variables, query) => {
     const url = `${API_BASE}?variables=${variables}&query=${query}`
@@ -26,7 +26,7 @@ export const animeByIDs = async (req, res) => {
     let {shows} = req.body
     shows = shows.map(show => `"${show}"`)
     const variables = `{"shows":[${shows}]}`
-    const query = `query($shows:[String!]!){showsWithIds(ids:$shows){_id,name}}`
+    const query = `query($shows:[String!]!){showsWithIds(ids:$shows){${requiredData}}}`
     const data = await connectAndFetchJson(variables, query)
     return res.json(data)
 }
