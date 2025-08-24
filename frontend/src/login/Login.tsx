@@ -59,9 +59,9 @@ const Login = () => {
                         <button className={`${!isSignUp && 'bg-gray-700'} px-4 py-2 rounded-xl outline-none focus:ring-1`} onClick={() => setIsSignup(false)}>Login</button>
                         <button className={`${isSignUp && 'bg-gray-700'} px-4 py-2 rounded-xl outline-none focus:ring-1`} onClick={() => setIsSignup(true)}>SignUp</button>
                     </div>
-                    <input className='mt-8 text-center outline-none border-b-1 w-8/10' type="text" placeholder='Enter email' onChange={handleEmailChange} /><br />
-                    <input className='mt-6 text-center outline-none border-b-1 w-8/10' type="password" placeholder='Enter password' onChange={handlePasswordChange} />
-                    <button className='mt-6 bg-gray-700 px-4 py-2 cursor-pointer rounded-2xl hover:bg-gray-600 focus:outline-1' type='submit' onClick={handleSubmit}>{isSignUp ? 'SignUp' : 'Login'}</button>
+                    <input className='mt-8 text-center outline-none border-b-1 placeholder-gray-400' type="text" placeholder='Enter email' onChange={handleEmailChange} /><br />
+                    <input className='mt-3 text-center outline-none border-b-1 placeholder-gray-400' type="password" placeholder='Enter password' onChange={handlePasswordChange} />
+                    <button className='mt-9 bg-gray-700 px-4 py-2 cursor-pointer rounded-2xl hover:bg-gray-600 focus:outline-1 focus:outline-gray-100' type='submit' onClick={handleSubmit}>{isSignUp ? 'SignUp' : 'Login'}</button>
                 </div>
             </div>}
         </div>
