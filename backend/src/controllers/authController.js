@@ -87,36 +87,38 @@ export const forgot = async (req, res) => {
         console.log('Connected to database users')
 
         const user = await User.findOne({ email })
+        if (user) {
+            const salt = await bcrypt.genSalt(10)
+            const refreshToken = await bcrypt.hash(email, salt)
 
-        const salt = await bcrypt.genSalt(10)
-        const refreshToken = await bcrypt.hash(email, salt)
+            user.refreshToken = refreshToken
+            await user.save()
 
-        user.refreshToken = refreshToken
-        await user.save()
-
-        const resetLink = `http://localhost:3000/api/auth/verify/${refreshToken}`
-
-        const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: 587,
-            secure: false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
-            },
-        });
-
-        (async () => {
-            const info = await transporter.sendMail({
-                from: process.env.SMTP_MAIL,
-                to: email,
-                subject: "Akira Password Reset",
-                text: "",
-                html: `<p>Click below link to reset 👇</p><br><a href=${resetLink}>Reset</a>`,
+            const resetLink = `http://localhost:3000/api/auth/verify/${refreshToken}`
+            const transporter = nodemailer.createTransport({
+                host: process.env.SMTP_HOST,
+                port: 587,
+                secure: false,
+                auth: {
+                    user: process.env.SMTP_USER,
+                    pass: process.env.SMTP_PASS,
+                },
             });
 
-            console.log("Message sent:", info.messageId);
-        })();
+            (async () => {
+                const info = await transporter.sendMail({
+                    from: process.env.SMTP_MAIL,
+                    to: email,
+                    subject: "Akira Password Reset",
+                    text: "",
+                    html: `<p>Click below link to reset 👇</p><br><a href=${resetLink}>Reset</a>`,
+                });
+
+                console.log("Message sent:", info.messageId);
+            })();
+        } else {
+            return res.status(404).json({ success: false, message: 'Unable to find user' })
+        }
 
     } catch (error) {
         return res.status(404).json({ success: false, message: 'Email not registered', error: error.message })
@@ -126,6 +128,32 @@ export const forgot = async (req, res) => {
     }
 
     return res.json({ success: true })
+}
+
+export const checkRefreshToken = async (req, res) => {
+    const { refreshToken } = req.body
+
+    if (!refreshToken) {
+        res.status(404).json({ success: false, message: 'Missing parameters' })
+    }
+
+    try {
+        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        console.log('Connected to database users')
+
+        const user = await User.findOne({ refreshToken })
+        if (user) {
+            return res.json({ success: true, message: 'Valid Token' })
+        } else {
+            return res.status(404).json({ success: false, message: 'Invalid token' })
+        }
+
+    } catch (error) {
+        return res.status(404).json({ success: false, message: 'Invalid Refresh Token', error: error.message })
+    } finally {
+        await mongoose.disconnect()
+        console.log('Disconnected from users database')
+    }
 }
 
 export const verify = async (req, res) => {
