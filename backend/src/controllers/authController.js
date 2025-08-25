@@ -95,7 +95,7 @@ export const forgot = async (req, res) => {
         user.refreshToken = refreshToken
         await user.save()
 
-        const resetLink = `http://localhost:5173/${refreshToken}`
+        const resetLink = `http://localhost:5173/${encodeURIComponent(refreshToken)}`
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
             port: 587,
