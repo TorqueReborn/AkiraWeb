@@ -142,6 +142,7 @@ export const verify = async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, salt)
 
             user.password = hashedPassword
+            user.refreshToken = ''
             await user.save()
         } else {
             return res.json({ success: false, message: 'Invalid Refresh Token' })
