@@ -9,7 +9,7 @@ export const addAnime = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        await mongoose.connect(process.env.MONGO_DB_URI)
         console.log('Connected to users database')
 
         const user = await User.findOne({ token })
@@ -57,7 +57,7 @@ export const deleteAnime = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        await mongoose.connect(process.env.MONGO_DB_URI)
         console.log('Connected to users database')
 
         const user = await User.findOne({ token })

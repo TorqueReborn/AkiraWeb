@@ -17,7 +17,7 @@ export const login = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        await mongoose.connect(process.env.MONGO_DB_URI)
         console.log('Connected to database users')
 
         const user = await User.findOne({ email })
@@ -50,7 +50,7 @@ export const register = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        await mongoose.connect(process.env.MONGO_DB_URI)
         console.log('Connected to database users')
 
         const user = await User.findOne({ email })
@@ -82,7 +82,7 @@ export const forgot = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        await mongoose.connect(process.env.MONGO_DB_URI)
         console.log('Connected to database users')
 
         const user = await User.findOne({ email })
@@ -137,7 +137,7 @@ export const checkRefreshToken = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        await mongoose.connect(process.env.MONGO_DB_URI)
         console.log('Connected to database users')
 
         const user = await User.findOne({ refreshToken })
@@ -159,7 +159,7 @@ export const verify = async (req, res) => {
     const { password } = req.body
 
     try {
-        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        await mongoose.connect(process.env.MONGO_DB_URI)
         console.log('Connected to database users')
 
         const user = await User.findOne({ refreshToken: token })
