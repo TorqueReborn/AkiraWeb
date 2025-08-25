@@ -14,8 +14,10 @@ const PopularAnime = () => {
     }, [])
 
     return (
-        <div>
-            {data && data.map((d: Anime) => <Card title={d.englishName} thumbnail={d.thumbnail} />)}
+        <div className="">
+            <div className="flex">
+                {data && data.map((d: Anime) => <Card title={d.englishName} thumbnail={d.thumbnail} />)}
+            </div>
         </div>
     )
 }
