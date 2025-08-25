@@ -31,6 +31,11 @@ const userSchema = new Schema({
         required: false, 
         default: null
     },
+    refreshToken: {
+        type: String,
+        required: false,
+        default: null
+    },
     anime: [animeSchema]
 })
 
