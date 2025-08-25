@@ -1,11 +1,9 @@
-import Navbar from "../../components/Navbar/Navbar"
-import PopularAnime from "./PopularAnime/PopularAnime"
+import Spotlight from "./Spotlight/Spotlight"
 
 const Home = () => {
   return (
     <div>
-      <Navbar />
-      <PopularAnime />
+      <Spotlight />
     </div>
   )
 }
