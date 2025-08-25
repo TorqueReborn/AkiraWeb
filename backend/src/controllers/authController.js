@@ -94,7 +94,7 @@ export const forgot = async (req, res) => {
         user.refreshToken = refreshToken
         await user.save()
 
-        const resetLink = `http://localhost:3000/verify/${refreshToken}`
+        const resetLink = `http://localhost:3000/api/auth/verify/${refreshToken}`
 
         const transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
@@ -120,6 +120,35 @@ export const forgot = async (req, res) => {
 
     } catch (error) {
         return res.status(404).json({ success: false, message: 'Email not registered', error: error.message })
+    } finally {
+        await mongoose.disconnect()
+        console.log('Disconnected from users database')
+    }
+
+    return res.json({ success: true })
+}
+
+export const verify = async (req, res) => {
+    const { token } = req.params
+    const { password } = req.body
+
+    try {
+        await mongoose.connect(`${process.env.MONGO_DB_URI}/users`)
+        console.log('Connected to database users')
+
+        const user = await User.findOne({ refreshToken: token })
+        if (user) {
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(password, salt)
+
+            user.password = hashedPassword
+            await user.save()
+        } else {
+            return res.json({ success: false, message: 'Invalid Refresh Token' })
+        }
+
+    } catch (error) {
+        return res.status(404).json({ success: false, message: 'Invalid Refresh Token', error: error.message })
     } finally {
         await mongoose.disconnect()
         console.log('Disconnected from users database')
