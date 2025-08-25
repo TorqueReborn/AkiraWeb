@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import authRouter from './routers/authRouter.js';
 import userRouter from './routers/userRouter.js';
-import animeRouter from './routers/animeRouter.js';
+import allAnimeRouter from './routers/allAnimeRouter.js';
 
 dotenv.config();
 const app = express();
@@ -22,5 +22,5 @@ app.get('/', async (_, res) => {
 
 // Controllers
 app.use('/api/auth', authRouter)
-app.use('/api/anime', animeRouter)
+app.use('/api/anime', allAnimeRouter)
 app.use('/api/user', userRouter)
