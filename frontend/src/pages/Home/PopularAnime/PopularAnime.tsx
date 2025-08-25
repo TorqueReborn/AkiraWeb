@@ -1,9 +1,20 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Card from "./components/Card"
 import type { Anime } from "../../../interface/Anime"
 
 const PopularAnime = () => {
     const [data, setData] = useState<Anime[]>([])
+    const scrollRef = useRef<HTMLDivElement>(null)
+
+    const handleMouseScroll = (e: React.WheelEvent) => {
+        if (scrollRef.current) {
+            if (e.deltaY > 0) {
+                scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
+            } else {
+                scrollRef.current.scrollBy({ left: -200, behavior: "smooth" })
+            }
+        }
+    }
 
     useEffect(() => {
         const popular = async () => {
@@ -14,9 +25,9 @@ const PopularAnime = () => {
     }, [])
 
     return (
-        <div className="">
-            <div className="flex">
-                {data && data.map((d: Anime) => <Card title={d.englishName} thumbnail={d.thumbnail} />)}
+        <div>
+            <div className="flex overflow-x-scroll overflow-y-clip no-scrollbar" ref={scrollRef} onWheel={handleMouseScroll}>
+                {data && data.map((d: Anime, index: number) => <div key={d._id}><Card number={index + 1} title={d.englishName} thumbnail={d.thumbnail} /></div>)}
             </div>
         </div>
     )
