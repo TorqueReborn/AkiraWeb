@@ -13,35 +13,34 @@ export const addAnime = async (req, res) => {
         console.log('Connected to users database')
 
         const user = await User.findOne({ token })
-        if (user) {
-            for (const id of ids) {
-                const anime = await User.findOne({ token, "anime.id": id })
-                if (anime) {
-                    await User.findOneAndUpdate(
-                        {
-                            token,
-                            "anime.id": id
-                        },
-                        {
-                            "$set": {
-                                "anime.$[elem].status": status,
-                                "anime.$[elem].progress": progress
-                            }
-                        },
-                        {
-                            new: true,
-                            arrayFilters: [{ "elem.id": id }]
-                        }
-                    )
-                } else {
-                    user.anime.push({ id, status, progress })
-                    await user.save()
-                }
-            }
-            return res.json({ success: true, message: 'User anime(s) approved' })
-        } else {
+        if (!user) {
             return res.json({ success: false, message: 'Invalid Token Sign in again' })
         }
+        for (const id of ids) {
+            const anime = await User.findOne({ token, "anime.id": id })
+            if (anime) {
+                await User.findOneAndUpdate(
+                    {
+                        token,
+                        "anime.id": id
+                    },
+                    {
+                        "$set": {
+                            "anime.$[elem].status": status,
+                            "anime.$[elem].progress": progress
+                        }
+                    },
+                    {
+                        new: true,
+                        arrayFilters: [{ "elem.id": id }]
+                    }
+                )
+            } else {
+                user.anime.push({ id, status, progress })
+                await user.save()
+            }
+        }
+        return res.json({ success: true, message: 'User anime(s) approved' })
     } catch (error) {
         return res.status(404).json({ success: false, message: error.message })
     } finally {
@@ -62,13 +61,13 @@ export const deleteAnime = async (req, res) => {
         console.log('Connected to users database')
 
         const user = await User.findOne({ token })
-        if (user) {
-            user.anime.pull({ id })
-            await user.save()
-            return res.json({ success: true, message: 'User anime deleted' })
-        } else {
+        if (!user) {
             return res.json({ success: false, message: 'Invalid Token Sign in again' })
         }
+        
+        user.anime.pull({ id })
+        await user.save()
+        return res.json({ success: true, message: 'User anime deleted' })
     } catch (error) {
         return res.status(404).json({ success: false, message: error.message })
     } finally {

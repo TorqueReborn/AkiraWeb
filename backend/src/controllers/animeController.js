@@ -1,5 +1,5 @@
-const requiredData = '_id,englishName,thumbnail'
 const API_BASE = 'https://api.allanime.day/api'
+const requiredData = '_id,englishName,thumbnail'
 
 const connectAndFetchJson = async (variables, query) => {
     const url = `${API_BASE}?variables=${variables}&query=${query}`
@@ -8,8 +8,7 @@ const connectAndFetchJson = async (variables, query) => {
         if (!response.ok) {
             return { success: false, message: 'Unable to retrieve anime' }
         }
-        const data = await response.json()
-        return data
+        return response.json()
     } catch (error) {
         return { success: false, message: 'Unable to get anime' }
     }
@@ -24,8 +23,7 @@ export const animeByID = async (req, res) => {
 
 export const animeByIDs = async (req, res) => {
     let {shows} = req.body
-    shows = shows.map(show => `"${show}"`)
-    const variables = `{"shows":[${shows}]}`
+    const variables = `{"shows":[${shows.map(show => `"${show}"`)}]}`
     const query = `query($shows:[String!]!){showsWithIds(ids:$shows){${requiredData}}}`
     const data = await connectAndFetchJson(variables, query)
     return res.json(data.data.showsWithIds)
