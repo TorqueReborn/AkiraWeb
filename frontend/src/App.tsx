@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import { useState } from "react";
 import Splash from "./splash/Splash"
+import Home from './pages/Home/Home';
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(!Cookies.get('splashSeen'))
@@ -8,6 +9,7 @@ const App = () => {
   return (
     <div>
       {showSplash && <Splash setShowSplash={setShowSplash} />}
+      {!showSplash && <Home />}
     </div>
   )
 }
