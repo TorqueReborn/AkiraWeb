@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import User from "../models/userModel.js"
+import Anime from '../models/animeModel.js'
 
 export const addAnime = async (req, res) => {
     const { token, ids, status = 'watching', progress = 1 } = req.body
@@ -12,15 +13,20 @@ export const addAnime = async (req, res) => {
         const user = await User.findOne({ token })
         if (user) {
             ids.forEach(async (id) => {
-                const anime = await User.findOne({ token: token, "anime.id": id })
-                if (anime) {
+                const userAnime = await User.findOne({ token: token, "anime.id": id })
+                if (userAnime) {
                     await User.updateOne({ token: token, "anime.id": id }, { $set: { "anime.$[element].status": status, "anime.$[element].progress": progress } }, { arrayFilters: [{ "element.id": id }] })
                 } else {
-                    user.anime.push({ id, status, progress })
-                    await user.save()
+                    await User.updateOne({token}, {$push: {anime: {id, status, progress}}})
+                    const anime = await Anime.findOne({id})
+                    if (anime) {
+                        await Anime.updateOne({id: id}, {$inc: {count: 1}})
+                    } else {
+                        await Anime.insertOne({id: id, count: 1})
+                    }
                 }
             });
-            return res.json({ success: true })
+            return res.json({ success: true, message: 'User anime approved' })
         } else {
             res.status(404).json({ success: false, message: 'Invalid Token' })
         }
