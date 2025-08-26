@@ -21,7 +21,7 @@ const Spotlight = () => {
   }, [])
 
   return (
-    <div>
+    <div className="h-screen">
       <Banner img="https://s4.anilist.co/file/anilistcdn/media/anime/banner/184237-SBj6UJvIWAOg.jpg"/>
     </div>
   )
