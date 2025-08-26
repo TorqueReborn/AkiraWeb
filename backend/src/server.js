@@ -4,6 +4,7 @@ import express from 'express';
 import authRouter from './routers/authRouter.js';
 import userRouter from './routers/userRouter.js';
 import allAnimeRouter from './routers/allAnimeRouter.js';
+import animeRouter from './routers/animeRouter.js'
 import mongoose from 'mongoose';
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.get('/', async (_, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/anime', allAnimeRouter)
 app.use('/api/user', userRouter)
+app.use('/api', animeRouter)
 
 process.on('SIGINT', () => {
     mongoose.disconnect(() => {
