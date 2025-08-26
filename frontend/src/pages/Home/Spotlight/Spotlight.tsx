@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import Banner from './components/Banner'
 
 interface Anime {
   _id: string,
@@ -20,7 +21,9 @@ const Spotlight = () => {
   }, [])
 
   return (
-    <div>Spotlight</div>
+    <div>
+      <Banner img="https://s4.anilist.co/file/anilistcdn/media/anime/banner/184237-SBj6UJvIWAOg.jpg"/>
+    </div>
   )
 }
 
