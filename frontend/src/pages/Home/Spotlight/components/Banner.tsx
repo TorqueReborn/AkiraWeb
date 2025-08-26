@@ -4,7 +4,7 @@ interface BannerProps {
 
 const Banner = ({ img }: BannerProps) => {
     return (
-        <div className="relative h-2/3 bg-white">
+        <div className="relative h-[75vh]">
             <div className="absolute w-full h-full bg-gradient-to-r from-gray-900 to-gray-100/0" />
             <div className="absolute w-full h-full bg-gradient-to-t from-gray-900 to-gray-100/0" />
             <div className="absolute bottom-0 w-1/2 m-20">
