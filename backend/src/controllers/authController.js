@@ -17,8 +17,6 @@ export const login = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(process.env.MONGO_DB_URI)
-        console.log('Connected to database users')
 
         const user = await User.findOne({ email })
         if (!user) {
@@ -36,9 +34,6 @@ export const login = async (req, res) => {
         return res.json({ success: true, message: 'Logged in successfully', token: token })
     } catch (err) {
         return res.json({ successs: false, message: 'Unable to connect to database' })
-    } finally {
-        await mongoose.disconnect()
-        console.log('Disconnected from users database')
     }
 }
 
@@ -50,8 +45,6 @@ export const register = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(process.env.MONGO_DB_URI)
-        console.log('Connected to database users')
 
         const user = await User.findOne({ email })
         if (user) {
@@ -68,9 +61,6 @@ export const register = async (req, res) => {
         return res.json({ success: true, message: 'User successfully registered', token: token })
     } catch (error) {
         return res.status(404).json({ success: false, message: 'Unable to create new user', error: error.message })
-    } finally {
-        await mongoose.disconnect()
-        console.log('Disconnected from users database')
     }
 }
 
@@ -82,8 +72,6 @@ export const forgot = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(process.env.MONGO_DB_URI)
-        console.log('Connected to database users')
 
         const user = await User.findOne({ email })
         if (!user) {
@@ -121,9 +109,6 @@ export const forgot = async (req, res) => {
 
     } catch (error) {
         return res.status(404).json({ success: false, message: 'Email not registered', error: error.message })
-    } finally {
-        await mongoose.disconnect()
-        console.log('Disconnected from users database')
     }
 
     return res.json({ success: true })
@@ -137,8 +122,6 @@ export const checkRefreshToken = async (req, res) => {
     }
 
     try {
-        await mongoose.connect(process.env.MONGO_DB_URI)
-        console.log('Connected to database users')
 
         const user = await User.findOne({ refreshToken })
         if (!user) {
@@ -148,9 +131,6 @@ export const checkRefreshToken = async (req, res) => {
         return res.json({ success: true, message: 'Valid Token' })
     } catch (error) {
         return res.status(404).json({ success: false, message: 'Invalid Refresh Token', error: error.message })
-    } finally {
-        await mongoose.disconnect()
-        console.log('Disconnected from users database')
     }
 }
 
@@ -159,8 +139,6 @@ export const verify = async (req, res) => {
     const { password } = req.body
 
     try {
-        await mongoose.connect(process.env.MONGO_DB_URI)
-        console.log('Connected to database users')
 
         const user = await User.findOne({ refreshToken: token })
         if (!user) {
@@ -175,9 +153,6 @@ export const verify = async (req, res) => {
 
     } catch (err) {
         return res.status(404).json({ success: false, message: 'Invalid Refresh Token', error: err.message })
-    } finally {
-        await mongoose.disconnect()
-        console.log('Disconnected from users database')
     }
 
     return res.json({ success: true })
