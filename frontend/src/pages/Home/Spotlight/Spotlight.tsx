@@ -1,7 +1,9 @@
 import { useEffect } from "react"
 
 interface Anime {
-  id: string
+  _id: string,
+  englishName: string,
+  thumbnail: string
 }
 
 const Spotlight = () => {
@@ -11,9 +13,8 @@ const Spotlight = () => {
       const spot = await fetch('http://localhost:3000/api/spotlight')
       const rawJSON = await spot.json()
       const ids = rawJSON.animes.map((anime: Anime) => {
-        return {id: anime.id}
+        return { _id: anime._id, englishName: anime.englishName, thumbnail: anime.thumbnail }
       })
-      console.log(ids)
     }
     fetchSpotlight()
   }, [])
