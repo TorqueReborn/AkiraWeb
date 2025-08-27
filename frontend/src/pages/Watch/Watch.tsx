@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { generatePost } from "../../utils"
+import Player from "./Player/Player"
 
 const Watch = () => {
     const { id, episode } = useParams()
-    const [videoUri, setVideoUri] = useState()
+    const [videoUri, setVideoUri] = useState('')
 
     useEffect(() => {
         const fetchVideoUri = async () => {
@@ -17,8 +18,8 @@ const Watch = () => {
     }, [])
 
     return (
-        <div>
-            <video src={videoUri} width={640} height={340} controls />
+        <div className="h-screen w-scren">
+            <Player videoUri={videoUri}/>
         </div>
     )
 }
