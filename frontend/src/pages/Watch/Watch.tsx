@@ -18,7 +18,9 @@ const Watch = () => {
 
     return (
         <div>
-            <video src={videoUri}></video>
+            <video width={640} height={360} controls>
+                <source src={videoUri} />
+            </video>
         </div>
     )
 }
