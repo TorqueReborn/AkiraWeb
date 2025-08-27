@@ -4,13 +4,14 @@ export const spotlight = async (req, res) => {
     try {
         const animes = await Anime.find({}).limit(5)
         if (animes.length > 0) {
+            const { data } = req.body
             const ids = animes.map(anime => anime.id)
             const response = await fetch('http://localhost:3000/api/anime/ids', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({shows: ids})
+                body: JSON.stringify({ shows: ids, data: data })
             })
             const rawJSON = await response.json()
             return res.json({ success: true, animes: rawJSON })

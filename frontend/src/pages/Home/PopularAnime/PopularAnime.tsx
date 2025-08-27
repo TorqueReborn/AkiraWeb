@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import Card from "./components/Card"
 import type { Anime } from "../../../interface/Anime"
+import { generatePost } from "../../../utils"
 
 const PopularAnime = () => {
     const [data, setData] = useState<Anime[]>([])
@@ -18,7 +19,7 @@ const PopularAnime = () => {
 
     useEffect(() => {
         const popular = async () => {
-            const response = await fetch('http://localhost:3000/api/anime/trending')
+            const response = await fetch('http://localhost:3000/api/anime/trending', generatePost({data: "_id,englishName,thumbnail"}))
             setData(await response.json())
         }
         popular()

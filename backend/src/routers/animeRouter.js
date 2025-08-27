@@ -3,6 +3,6 @@ import { spotlight } from '../controllers/animeController.js'
 
 const animeRouter = express.Router()
 
-animeRouter.get('/spotlight', spotlight)
+animeRouter.post('/spotlight', spotlight)
 
 export default animeRouter

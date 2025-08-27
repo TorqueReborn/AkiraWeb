@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Banner from './components/Banner'
+import { generatePost } from "../../../utils"
 
 interface Anime {
   _id: string,
@@ -14,7 +15,7 @@ const Spotlight = () => {
 
   useEffect(() => {
     const fetchSpotlight = async () => {
-      const spot = await fetch('http://localhost:3000/api/spotlight')
+      const spot = await fetch('http://localhost:3000/api/spotlight', generatePost({data: "_id,englishName,banner,description"}))
       const rawJSON = await spot.json()
       const ids = rawJSON.animes.map((anime: Anime) => {
         return { _id: anime._id, englishName: anime.englishName, banner: anime.banner, description: anime.description }
