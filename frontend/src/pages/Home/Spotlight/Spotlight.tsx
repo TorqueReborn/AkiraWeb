@@ -4,7 +4,7 @@ import Banner from './components/Banner'
 interface Anime {
   _id: string,
   englishName: string,
-  thumbnail: string,
+  banner: string,
   description: string
 }
 
@@ -17,7 +17,7 @@ const Spotlight = () => {
       const spot = await fetch('http://localhost:3000/api/spotlight')
       const rawJSON = await spot.json()
       const ids = rawJSON.animes.map((anime: Anime) => {
-        return { _id: anime._id, englishName: anime.englishName, thumbnail: anime.thumbnail, description: anime.description }
+        return { _id: anime._id, englishName: anime.englishName, banner: anime.banner, description: anime.description }
       })
       setAnimeData(ids)
     }
@@ -33,7 +33,7 @@ const Spotlight = () => {
 
   return (
     <div>
-      {animeData.length > 0 && <Banner title={animeData[index].englishName} img={animeData[index].thumbnail} description={animeData[index].description}/>}
+      {animeData.length > 0 && <Banner title={animeData[index].englishName} img={animeData[index].banner} description={animeData[index].description} />}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 const API_BASE = 'https://api.allanime.day/api'
-const requiredData = '_id,englishName,thumbnail,description'
+const requiredData = '_id,englishName,thumbnail,banner,description'
 
 const connectAndFetchJson = async (variables, query) => {
     const url = `${API_BASE}?variables=${variables}&query=${query}`
