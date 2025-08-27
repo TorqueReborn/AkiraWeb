@@ -14,7 +14,7 @@ const Splash = ({ setShowSplash }: SplashProps) => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen text-white">
-            <h1 className="text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            <h1 className="text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
                 Akira
             </h1>
             <p className="mb-5">By Ghost Reborn!!!</p>

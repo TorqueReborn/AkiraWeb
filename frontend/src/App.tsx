@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import { useState } from "react";
-import Splash from "./splash/Splash"
+import Splash from "./pages/splash/Splash"
 import Home from './pages/Home/Home';
 
 const App = () => {
