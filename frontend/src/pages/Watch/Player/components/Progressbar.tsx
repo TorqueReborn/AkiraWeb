@@ -15,7 +15,7 @@ const Progressbar = ({ video }: { video: React.RefObject<HTMLVideoElement | null
     }
 
     return (
-        <div ref={progressRef} onClick={handleClick} className="cursor-pointer bg-amber-300">
+        <div ref={progressRef} onClick={handleClick} className="w-full cursor-pointer bg-amber-300">
             <div style={{ width: `${progress}%` }} className="h-1 bg-white" />
         </div>
     )
