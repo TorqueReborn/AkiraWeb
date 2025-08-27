@@ -4,9 +4,9 @@ import { animeByID, animeByIDs, animeTrending, animeEpisode } from '../controlle
 const allAnimeRouter = express.Router()
 
 allAnimeRouter.post('/ids', animeByIDs)
-allAnimeRouter.get('/trending', animeTrending)
+allAnimeRouter.post('/trending', animeTrending)
 
-allAnimeRouter.get('/:id', animeByID)
-allAnimeRouter.get('/:id/:episode', animeEpisode)
+allAnimeRouter.post('/:id', animeByID)
+allAnimeRouter.post('/:id/:episode', animeEpisode)
 
 export default allAnimeRouter

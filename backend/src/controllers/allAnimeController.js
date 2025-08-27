@@ -1,5 +1,4 @@
 const API_BASE = 'https://api.allanime.day/api'
-const requiredData = '_id,englishName,thumbnail,banner,description'
 
 const connectAndFetchJson = async (variables, query) => {
     const url = `${API_BASE}?variables=${variables}&query=${query}`
@@ -15,29 +14,32 @@ const connectAndFetchJson = async (variables, query) => {
 }
 
 export const animeByID = async (req, res) => {
+    const { data } = req.body
     const variables = `{"id":"${req.params.id}"}`
-    const query = `query($id:String!){show(_id:$id){${requiredData}}}`
-    const data = await connectAndFetchJson(variables, query)
-    return res.json(data.data.show)
+    const query = `query($id:String!){show(_id:$id){${data}}}`
+    const response = await connectAndFetchJson(variables, query)
+    return res.json(response.data.show)
 }
 
 export const animeByIDs = async (req, res) => {
-    let {shows} = req.body
+    let { shows, data } = req.body
     const variables = `{"shows":[${shows.map(show => `"${show}"`)}]}`
-    const query = `query($shows:[String!]!){showsWithIds(ids:$shows){${requiredData}}}`
-    const data = await connectAndFetchJson(variables, query)
-    return res.json(data.data.showsWithIds)
+    const query = `query($shows:[String!]!){showsWithIds(ids:$shows){${data}}}`
+    const response = await connectAndFetchJson(variables, query)
+    return res.json(response.data.showsWithIds)
 }
 
-export const animeTrending = async (_, res) => {
+export const animeTrending = async (req, res) => {
+    const { data } = req.body
     const variables = `{"type":"anime","size":10,"dateRange":1}`
-    const query = `query($type:VaildPopularTypeEnumType!,$size:Int!,$dateRange:Int!){queryPopular(type:$type,size:$size,dateRange:$dateRange){recommendations{anyCard{${requiredData}}}}}`
-    const data = await connectAndFetchJson(variables, query)
-    return res.json(data.data.queryPopular.recommendations.map(recommend => recommend.anyCard))
+    const query = `query($type:VaildPopularTypeEnumType!,$size:Int!,$dateRange:Int!){queryPopular(type:$type,size:$size,dateRange:$dateRange){recommendations{anyCard{${data}}}}}`
+    const response = await connectAndFetchJson(variables, query)
+    return res.json(response.data.queryPopular.recommendations.map(recommend => recommend.anyCard))
 }
 
 export const animeEpisode = async (req, res) => {
-    const variables = `{"showId": "${req.params.id}","episodeString":"${req.params.episode}","translationType": "sub"}`
+    const { translationType } = req.body
+    const variables = `{"showId": "${req.params.id}","episodeString":"${req.params.episode}","translationType": "${translationType}"}`
     const query = `query($showId:String!,$episodeString:String!,$translationType:VaildTranslationTypeEnumType!){episode(showId:$showId,episodeString:$episodeString,translationType:$translationType){episodeInfo {vidInforssub}}}`
     const data = await connectAndFetchJson(variables, query)
     return res.json(`https://aln.youtube-anime.com${data.data.episode.episodeInfo.vidInforssub.vidPath}`)
