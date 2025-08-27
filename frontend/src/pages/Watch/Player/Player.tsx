@@ -26,7 +26,7 @@ const Player = ({ videoUri }: PlayerProps) => {
             <video ref={videoRef} src={videoUri} className="w-full h-full" />
             {isPlaying ? <IoPauseOutline className="absolute bottom-1/2 w-8 h-8" onClick={handlePlayPause} /> : <IoPlayOutline className="absolute bottom-1/2 w-8 h-8" onClick={handlePlayPause} />}
             <div className="absolute bottom-6 w-[45vw]">
-                <Progressbar />
+                <Progressbar video={videoRef} />
             </div>
         </div>
     )
