@@ -9,7 +9,7 @@ const Watch = () => {
     useEffect(() => {
         const fetchVideoUri = async () => {
             if (id && episode) {
-                const response = await fetch(`http://localhost:3000/api/anime/${id}/${episode}`, generatePost({"translationType": "sub"}))
+                const response = await fetch(`http://localhost:3000/api/anime/${id}/${episode}`, generatePost({ "translationType": "sub" }))
                 setVideoUri(await response.json())
             }
         }
@@ -18,9 +18,7 @@ const Watch = () => {
 
     return (
         <div>
-            <video width={640} height={360} controls>
-                <source src={videoUri} />
-            </video>
+            <video src={videoUri} width={640} height={340} controls />
         </div>
     )
 }
