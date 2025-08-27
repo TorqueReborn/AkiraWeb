@@ -1,8 +1,8 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { IoPauseOutline, IoPlayOutline } from "react-icons/io5"
 import Progressbar from "./components/Progressbar"
 
-const Player = ({ videoUri }: {videoUri: string}) => {
+const Player = ({ videoUri }: { videoUri: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null)
     const [isPlaying, setIsPlaying] = useState(false)
     const [duration, setDuration] = useState<number>(0)
@@ -17,11 +17,11 @@ const Player = ({ videoUri }: {videoUri: string}) => {
     }
 
     const handlePlayPause = () => {
-        if (videoRef) {
+        if (videoRef.current) {
             if (isPlaying) {
-                videoRef.current?.pause()
+                videoRef.current.pause()
             } else {
-                videoRef.current?.play()
+                videoRef.current.play()
             }
             setIsPlaying(!isPlaying)
         }
@@ -38,6 +38,40 @@ const Player = ({ videoUri }: {videoUri: string}) => {
             setDuration(videoRef.current.duration)
         }
     }
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            console.log(e.key)
+            if (e.key === ' ') {
+                e.preventDefault()
+                handlePlayPause()
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault()
+                if (videoRef.current) {
+                    videoRef.current.currentTime += 5
+                }
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault()
+                if (videoRef.current) {
+                    videoRef.current.currentTime -= 5
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault()
+                if (videoRef.current) {
+                    videoRef.current.volume = videoRef.current.volume + 0.1
+                }
+            }else if (e.key === 'ArrowDown') {
+                e.preventDefault()
+                if (videoRef.current) {
+                    videoRef.current.volume = videoRef.current.volume - 0.1
+                }
+            }
+        }
+        document.addEventListener('keydown', handleKeyDown)
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [handlePlayPause])
 
     return (
         <div className="relative w-[50vw] flex items-center justify-center">
