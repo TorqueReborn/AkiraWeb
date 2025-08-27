@@ -28,7 +28,7 @@ const PopularAnime = () => {
     return (
         <div>
             {data.length > 0 && (<h1 className="ml-10 my-4 text-3xl text-amber-400">Popular</h1>)}
-            <div className="flex overflow-x-scroll overflow-y-clip no-scrollbar" ref={scrollRef} onWheel={handleMouseScroll}>
+            <div className="flex overflow-x-scroll overflow-y-clip scroll-smooth no-scrollbar" ref={scrollRef} onWheel={handleMouseScroll}>
                 {data && data.map((d: Anime, index: number) => <div key={d._id}><Card number={index + 1} title={d.englishName} thumbnail={d.thumbnail} /></div>)}
             </div>
         </div>
