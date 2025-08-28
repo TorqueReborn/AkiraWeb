@@ -7,10 +7,6 @@ interface CardProps {
   thumbnail: string
 }
 
-const handleClick = () => {
-  console.log("clicked")
-}
-
 const Card = ({ id, number, title, thumbnail }: CardProps) => {
   const navigate = useNavigate()
 
