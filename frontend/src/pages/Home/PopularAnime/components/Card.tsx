@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom"
+
 interface CardProps {
+  id: string,
   number: number,
   title: string,
   thumbnail: string
@@ -8,7 +11,13 @@ const handleClick = () => {
   console.log("clicked")
 }
 
-const Card = ({ number, title, thumbnail }: CardProps) => {
+const Card = ({ id, number, title, thumbnail }: CardProps) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/${id}`)
+  }
+
   return (
     <button tabIndex={-1} className="flex relative w-48 h-72 mx-6 mb-4 p-1" onClick={handleClick}>
       <h1 className="flex absolute bottom-2 left-0 origin-left -rotate-90 w-54 -mb-4">
