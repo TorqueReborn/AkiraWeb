@@ -34,7 +34,7 @@ const Spotlight = () => {
 
   return (
     <div>
-      {animeData.length > 0 && <Banner title={animeData[index].englishName} img={animeData[index].banner} description={animeData[index].description} />}
+      {animeData.length > 0 && <Banner id={animeData[index]._id} title={animeData[index].englishName} img={animeData[index].banner} description={animeData[index].description} />}
     </div>
   )
 }
