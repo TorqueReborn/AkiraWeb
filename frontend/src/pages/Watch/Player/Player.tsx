@@ -1,19 +1,13 @@
-import Progressbar from "./components/Progressbar"
 import { useRef } from "react"
-import PlayPauseButton from "./components/PlayPauseButton"
+import Controls from "./components/Controls"
 
 const Player = ({ videoUri }: { videoUri: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null)
 
     return (
-        <div className="relative w-[50vw] flex items-center justify-center">
+        <div className="w-[50vw]">
             <video ref={videoRef} src={videoUri} className="w-full h-full" />
-            <div className="absolute bottom-0">
-                <PlayPauseButton videoRef={videoRef}/>
-            </div>
-            <div className="absolute bottom-12 h-1 w-[45vw]">
-                <Progressbar videoRef={videoRef}/>
-            </div>
+            <Controls videoRef={videoRef}/>
         </div>
     )
 }
