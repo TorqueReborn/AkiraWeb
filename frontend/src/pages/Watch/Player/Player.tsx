@@ -8,7 +8,7 @@ const Player = ({ videoUri }: { videoUri: string }) => {
     return (
         <div className="relative w-[50vw] flex items-center justify-center">
             <video ref={videoRef} src={videoUri} className="w-full h-full" />
-            <div className="absolute bottom-1/2">
+            <div className="absolute bottom-0">
                 <PlayPauseButton videoRef={videoRef}/>
             </div>
             <div className="absolute bottom-12 h-1 w-[45vw]">

@@ -53,8 +53,8 @@ const PlayPauseButton = ({ videoRef }: PlayPauseButtonProps) => {
     }, [handlePlayPause])
 
     return (
-        <div>
-            {isPlaying ? <IoPauseOutline size={50} onClick={handlePlayPause} /> : <IoPlayOutline size={50} onClick={handlePlayPause} />}
+        <div className="w-[50vw] h-[60vh] flex items-center justify-center" onClick={handlePlayPause}>
+            {isPlaying ? <IoPauseOutline size={50} /> : <IoPlayOutline size={50} />}
         </div>
     )
 }
