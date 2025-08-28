@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
 import Banner from './components/Banner'
+import { useEffect, useState } from "react"
 import { generatePost } from "../../../utils"
 
 interface Anime {
@@ -13,11 +13,11 @@ const Spotlight = () => {
   const [index, setIndex] = useState(0)
   const [animeData, setAnimeData] = useState<Anime[]>([])
 
+  // Fetch spotlight
   useEffect(() => {
     const fetchSpotlight = async () => {
-      const spot = await fetch('http://localhost:3000/api/spotlight', generatePost({data: "_id,englishName,banner,description"}))
-      const rawJSON = await spot.json()
-      const ids = rawJSON.animes.map((anime: Anime) => {
+      const spot = await fetch('http://localhost:3000/api/spotlight', generatePost({ data: "_id,englishName,banner,description" }))
+      const ids = (await spot.json()).animes.map((anime: Anime) => {
         return { _id: anime._id, englishName: anime.englishName, banner: anime.banner, description: anime.description }
       })
       setAnimeData(ids)
@@ -25,6 +25,7 @@ const Spotlight = () => {
     fetchSpotlight()
   }, [])
 
+  // Update spotlight once per 5 second
   useEffect(() => {
     if (animeData.length > 0) {
       const time = setTimeout(() => setIndex((prevIndex) => (prevIndex + 1) % animeData.length), 5000)
