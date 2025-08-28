@@ -14,8 +14,8 @@ const connectAndFetchJson = async (variables, query) => {
 }
 
 export const animeByID = async (req, res) => {
-    const { data } = req.body
-    const variables = `{"id":"${req.params.id}"}`
+    const { data, id } = req.body
+    const variables = `{"id":"${id}"}`
     const query = `query($id:String!){show(_id:$id){${data}}}`
     const response = await connectAndFetchJson(variables, query)
     return res.json(response.data.show)
@@ -38,8 +38,8 @@ export const animeTrending = async (req, res) => {
 }
 
 export const animeEpisode = async (req, res) => {
-    const { translationType } = req.body
-    const variables = `{"showId": "${req.params.id}","episodeString":"${req.params.episode}","translationType": "${translationType}"}`
+    const { id, episode, translationType } = req.body
+    const variables = `{"showId": "${id}","episodeString":"${episode}","translationType": "${translationType}"}`
     const query = `query($showId:String!,$episodeString:String!,$translationType:VaildTranslationTypeEnumType!){episode(showId:$showId,episodeString:$episodeString,translationType:$translationType){episodeInfo {vidInforssub}}}`
     const data = await connectAndFetchJson(variables, query)
     return res.json(`https://aln.youtube-anime.com${data.data.episode.episodeInfo.vidInforssub.vidPath}`)

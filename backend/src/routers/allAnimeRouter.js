@@ -6,7 +6,7 @@ const allAnimeRouter = express.Router()
 allAnimeRouter.post('/ids', animeByIDs)
 allAnimeRouter.post('/trending', animeTrending)
 
-allAnimeRouter.post('/:id', animeByID)
-allAnimeRouter.post('/:id/:episode', animeEpisode)
+allAnimeRouter.post('/id', animeByID)
+allAnimeRouter.post('/episode', animeEpisode)
 
 export default allAnimeRouter
