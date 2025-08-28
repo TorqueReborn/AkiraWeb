@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react"
 import Card from "./components/Card"
 import { generatePost } from "../../../utils"
+import { useEffect, useRef, useState } from "react"
 
 interface Anime {
     _id: string,
