@@ -1,1 +1,5 @@
-Current api doesn't provide description and banner so spotlight is null
+Create navigation bar
+Create search for it
+If added to favorites, show login
+Save anime data in browser database if not logged in
+Create notification section ie when new anime is uploaded, notify user

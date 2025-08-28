@@ -22,6 +22,7 @@ const Banner = ({ id, title, img, description }: BannerProps) => {
         <div className="relative h-[75vh]">
             <div className="absolute w-full h-full bg-gradient-to-r from-gray-900 to-gray-100/0" />
             <div className="absolute w-full h-full bg-gradient-to-t from-gray-900 to-gray-100/0" />
+            <div className="absolute w-full h-1/2 bg-gradient-to-b from-gray-900 to-gray-100/0" />
             <div className="absolute bottom-0 w-1/2 m-20">
                 <h1 className="font-bold text-5xl mb-4">{title}</h1>
                 <p className="font-medium line-clamp-3" dangerouslySetInnerHTML={{ __html: description }} />
