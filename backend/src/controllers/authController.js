@@ -134,8 +134,7 @@ export const checkRefreshToken = async (req, res) => {
 }
 
 export const verify = async (req, res) => {
-    const { token } = req.params
-    const { password } = req.body
+    const { password, token } = req.body
 
     try {
 
