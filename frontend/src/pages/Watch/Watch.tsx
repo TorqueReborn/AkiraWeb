@@ -1,7 +1,7 @@
+import Player from "./Player/Player"
+import { generatePost } from "../../utils"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { generatePost } from "../../utils"
-import Player from "./Player/Player"
 
 const Watch = () => {
     const { id, episode } = useParams()

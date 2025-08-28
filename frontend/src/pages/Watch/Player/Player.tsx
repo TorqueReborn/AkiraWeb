@@ -1,23 +1,16 @@
 import { useEffect, useRef, useState } from "react"
 import { IoPauseOutline, IoPlayOutline } from "react-icons/io5"
+import PlayPauseButton from "./components/PlayPauseButton"
 
 const Player = ({ videoUri }: { videoUri: string }) => {
-    const videoRef = useRef<HTMLVideoElement>(null)
     const [isPlaying, setIsPlaying] = useState(false)
-    const [duration, setDuration] = useState<number>(0)
-    const [current, setCurrent] = useState<number>(0)
-    const progressRef = useRef<HTMLDivElement>(null)
+    
     const [progress, setProgress] = useState(0)
-
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (progressRef.current && videoRef.current) {
-            const box = progressRef.current.getBoundingClientRect()
-            const clickedX = e.clientX - box.left
-            const percent = clickedX / box.width
-            setProgress(percent * 100)
-            videoRef.current.currentTime = percent * videoRef.current.duration
-        }
-    }
+    const [current, setCurrent] = useState<number>(0)
+    const [duration, setDuration] = useState<number>(0)
+    
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const progressRef = useRef<HTMLDivElement>(null)
 
     const formatTime = (timeInSeconds: number) => {
         const minutes = Math.floor(timeInSeconds / 60)
@@ -25,6 +18,12 @@ const Player = ({ videoUri }: { videoUri: string }) => {
         const formatedMinutes = minutes < 10 ? `0${minutes}` : minutes
         const formatedSeconds = seconds < 10 ? `0${seconds}` : seconds
         return `${formatedMinutes}:${formatedSeconds}`
+    }
+
+    const handleLoadedMetaData = () => {
+        if (videoRef.current) {
+            setDuration(videoRef.current.duration)
+        }
     }
 
     const handlePlayPause = () => {
@@ -45,9 +44,13 @@ const Player = ({ videoUri }: { videoUri: string }) => {
         }
     }
 
-    const handleLoadedMetaData = () => {
-        if (videoRef.current) {
-            setDuration(videoRef.current.duration)
+    const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (progressRef.current && videoRef.current) {
+            const box = progressRef.current.getBoundingClientRect()
+            const clickedX = e.clientX - box.left
+            const percent = clickedX / box.width
+            setProgress(percent * 100)
+            videoRef.current.currentTime = percent * videoRef.current.duration
         }
     }
 
@@ -88,10 +91,12 @@ const Player = ({ videoUri }: { videoUri: string }) => {
     return (
         <div className="relative w-[50vw] flex items-center justify-center">
             <video ref={videoRef} src={videoUri} className="w-full h-full" onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleLoadedMetaData} />
-            {isPlaying ? <IoPauseOutline className="absolute bottom-1/2 w-8 h-8" onClick={handlePlayPause} /> : <IoPlayOutline className="absolute bottom-1/2 w-8 h-8" onClick={handlePlayPause} />}
+            <div className="absolute bottom-1/2">
+                <PlayPauseButton videoRef={videoRef} playing={isPlaying} setIsPlaying={setIsPlaying}/>
+            </div>
             <div className="absolute h-1 bottom-6 w-[45vw] flex items-center">
                 <div className="mr-2 w-14">{formatTime(current)}</div>
-                <div ref={progressRef} onClick={handleClick} className="w-full cursor-pointer bg-amber-300">
+                <div ref={progressRef} onClick={handleProgressClick} className="w-full cursor-pointer bg-amber-300">
                     <div style={{ width: `${progress}%` }} className="h-1 bg-white" />
                 </div>
                 <div className="ml-2">{formatTime(duration)}</div>
