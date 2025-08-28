@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import Card from "./components/Card"
-import type { Anime } from "../../../interface/Anime"
 import { generatePost } from "../../../utils"
+
+interface Anime {
+    _id: string,
+    englishName: string,
+    thumbnail: string
+}
 
 const PopularAnime = () => {
     const [data, setData] = useState<Anime[]>([])
@@ -10,9 +15,9 @@ const PopularAnime = () => {
     const handleMouseScroll = (e: React.WheelEvent) => {
         if (scrollRef.current) {
             if (e.deltaY > 0) {
-                scrollRef.current.scrollBy({ left: 200, behavior: "smooth" })
+                scrollRef.current.scrollBy({ left: 300, behavior: "smooth" })
             } else {
-                scrollRef.current.scrollBy({ left: -200, behavior: "smooth" })
+                scrollRef.current.scrollBy({ left: -300, behavior: "smooth" })
             }
         }
     }
