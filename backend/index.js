@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express()
+const dotenv = require('dotenv')
+
 const authRouter = require('./routes/authRoute')
 
 const PORT = 3000
 
+dotenv.config()
 app.use(express.json())
 app.use('/auth', authRouter)
 
