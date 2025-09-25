@@ -1,10 +1,8 @@
 import mongoose from 'mongoose'
-import express from 'express'
-const app = express()
 
 const PORT = process.env.PORT || 3000
 
-async function startServer() {
+async function startServer(app) {
     try {
         await mongoose.connect(process.env.DB_URL)
         console.log('Connected to Database')

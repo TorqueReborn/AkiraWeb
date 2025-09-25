@@ -3,10 +3,10 @@ import express from 'express'
 import startServer from './utils.js'
 import authRouter from './routes/authRoute.js'
 
-dotenv.config()
-startServer()
-
 const app = express()
+
+dotenv.config()
+startServer(app)
 
 app.use(express.json())
 app.use('/auth', authRouter)
