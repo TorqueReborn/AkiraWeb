@@ -1,19 +1,12 @@
-const express = require('express')
-const app = express()
-const dotenv = require('dotenv')
-
-const authRouter = require('./routes/authRoute')
-
-const PORT = 3000
+import dotenv from 'dotenv'
+import express from 'express'
+import startServer from './utils.js'
+import authRouter from './routes/authRoute.js'
 
 dotenv.config()
+startServer()
+
+const app = express()
+
 app.use(express.json())
 app.use('/auth', authRouter)
-
-app.get('/', (req, res) => {
-    res.json({success: true, message: 'Welcome to Akira API'})
-})
-
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`)
-})

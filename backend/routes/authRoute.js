@@ -1,8 +1,9 @@
-const express = require('express')
-const router = express.Router()
+import express from 'express'
 
-router.post('/signup', (req, res) => {
+const authRouter = express.Router()
+
+authRouter.post('/signup', (req, res) => {
     res.json({ success: true, message: 'You are inside signup' })
 })
 
-module.exports = router
+export default authRouter
