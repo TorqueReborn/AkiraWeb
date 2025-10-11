@@ -1,10 +1,14 @@
 import experss from 'express'
-import { signup, verifyToken } from '../controller/authController.ts'
+import { login, signup, verifyToken } from '../controller/authController.ts'
 
 const authRouter = experss.Router()
 
 authRouter.post('/', (_, res) => {
     return res.json({ message: 'Authentication API' })
+})
+
+authRouter.post('/login', (req, res) => {
+    login(req, res)
 })
 
 authRouter.post('/signup', (req, res) => {
