@@ -1,3 +1,4 @@
+import UserSchema from "../model/User.ts";
 import connectDB from "../utils.ts";
 import type { Request, Response } from "express";
 
@@ -10,6 +11,8 @@ export const signup = async (
     if (initialCheck(req) && !req.body?.username && !req.body?.password) return res.status(404).send()
 
     const db = connectDB('akira')
+    const users = db.model('User', UserSchema)
+    
     await db.close()
 
     return res.json({ message: 'This is signup' })
