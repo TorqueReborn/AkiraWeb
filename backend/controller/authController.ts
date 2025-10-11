@@ -1,8 +1,14 @@
+import type { Model } from "mongoose";
 import UserSchema from "../model/User.ts";
 import type { Request, Response } from "express";
 import { connectDB, generateHash } from "../utils.ts";
 
 const initialCheck = (req: Request<Record<string, any>>) => !req.body
+
+const checkUserExists = async (db: Model<any>, username: string) => {
+    const search = await db.findOne({ username })
+    return !!search
+}
 
 export const signup = async (
     req: Request<Record<string, any>>,
@@ -12,8 +18,7 @@ export const signup = async (
     const db = connectDB('akira')
     const users = db.model('User', UserSchema)
     const token = await generateHash(req.body.username)
-    const search = await users.findOne({username: req.body.username})
-    if (search){
+    if (await checkUserExists(users, req.body.username)) {
         db.close()
         return res.status(404).send()
     }
