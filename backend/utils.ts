@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 
 const generateHash = async (value: string) => {
     const saltRounds = 10
-    const hash = await bcrypt
+    const hash = await bcrypt.hash(value, saltRounds)
+    return hash
 }
 
 const connectDB = (dbName: string) => {
