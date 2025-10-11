@@ -1,5 +1,5 @@
 import experss from 'express'
-import { signup } from '../controller/authController.ts'
+import { signup, verifyToken } from '../controller/authController.ts'
 
 const authRouter = experss.Router()
 
@@ -9,6 +9,10 @@ authRouter.post('/', (_, res) => {
 
 authRouter.post('/signup', (req, res) => {
     signup(req, res)
+})
+
+authRouter.post('/verify', (req, res) => {
+    verifyToken(req, res)
 })
 
 export default authRouter

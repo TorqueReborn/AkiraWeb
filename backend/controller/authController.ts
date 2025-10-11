@@ -30,3 +30,18 @@ export const signup = async (
     await db.close()
     return res.status(200).send()
 }
+
+export const verifyToken = async (
+    req: Request<Record<string, any>>,
+    res: Response<Record<string, any>>
+) => {
+    if (!initialCheck(req) && !req.body.token) return res.status(404).send()
+    const db = connectDB('akira')
+    const users = db.model('User', UserSchema)
+    const search = await users.findOne({ username: req.body.username, token: req.body.token })
+    if (search) {
+        db.close()
+        return res.json({ valid: true })
+    }
+    return res.status(404).send()
+}
