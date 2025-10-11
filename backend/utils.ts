@@ -1,4 +1,10 @@
+import bcrypt from 'bcrypt'
 import mongoose from "mongoose";
+
+const generateHash = async (value: string) => {
+    const saltRounds = 10
+    const hash = await bcrypt
+}
 
 const connectDB = (dbName: string) => {
     const DB_URL = process.env.DB_URL + dbName
