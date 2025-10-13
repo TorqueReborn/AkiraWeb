@@ -20,4 +20,12 @@ userRouter.post('/watching', async (req, res) => {
     return res.json({ message: 'You are inside watching anime' })
 })
 
+userRouter.post('/drop', async (req, res) => {
+    if (!req.body || !req.body.username || !req.body.token) return res.status(404).send()
+    const db = connectDB(`akira_${req.body.username}`)
+    const user = db.model('Watching', AnimeSchema)
+    await user.findOneAndDelete({ id: req.body.id })
+    return res.json({ message: 'You are inside drop anime' })
+})
+
 export default userRouter
