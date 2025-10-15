@@ -1,5 +1,5 @@
 import express from 'express'
-import { dropWatching, getWatching, updateWatching } from '../controller/userController.ts'
+import { dropWatching, getWatching, updateEpisode, updateWatching } from '../controller/userController.ts'
 
 const userRouter = express.Router()
 
@@ -13,6 +13,10 @@ userRouter.post('/watching', async (req, res) => {
 
 userRouter.post('/drop', async (req, res) => {
     dropWatching(req, res)
+})
+
+userRouter.post('/episode', async (req, res) => {
+    updateEpisode(req, res)
 })
 
 export default userRouter
