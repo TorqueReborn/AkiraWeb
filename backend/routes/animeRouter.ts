@@ -3,18 +3,35 @@ import express from 'express'
 const animeRouter = express.Router()
 const API_END_POINT = "https://api.allanime.day/api"
 
-animeRouter.get('/:id', async (req, res) => {
-    const QUERY = `
-        query($_id:String!) {
-            show(_id:$_id) {
-                name,
-                englishName,
-                thumbnail
+animeRouter.get('/ids', async (req, res) => {
+    let QUERY = ''
+    let VARIABLES = {}
+    if (Array.isArray(req.query.ids)) {
+        QUERY = `
+            query($ids: [String!]!){
+                showsWithIds(ids: $ids) {
+                    name,
+                    englishName,
+                    thumbnail,
+                }
             }
+        `
+        VARIABLES = {
+            "ids": req.query.ids
         }
-    `
-    const VARIABLES = {
-        "_id": req.params.id
+    } else {
+        QUERY = `
+            query($_id:String!) {
+                show(_id:$_id) {
+                    name,
+                    englishName,
+                    thumbnail
+                }
+            }
+        `
+        VARIABLES = {
+            "_id": req.query.ids
+        }
     }
     const response = await fetch(API_END_POINT, {
         method: 'POST',
