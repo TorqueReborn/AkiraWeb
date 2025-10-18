@@ -2,6 +2,7 @@ import { connectDB } from "../utils.ts";
 import AnimeSchema from "../model/Anime.ts";
 import EpisodeSchema from "../model/Episode.ts";
 import type { Request, Response } from "express";
+import TrendingSchema from "../model/Trending.ts";
 
 export const getWatching = async (
     req: Request<Record<string, any>>,
@@ -20,6 +21,17 @@ export const updateWatching = async (
     if (!req.body || !req.body.username || !req.body.token) return res.status(404).send()
     const db = connectDB(`akira_${req.body.username}`)
     const user = db.model('Watching', AnimeSchema)
+    const find = await user.findOne({id: req.body.id})
+    if (!find) {
+        const database = connectDB('akira')
+        const trending = database.model('Trending', TrendingSchema)
+        await trending.findOneAndUpdate(
+            {id: req.body.id},
+            {$inc: {number: 1}, $setOnInsert: {id: req.body.id}},
+            {new: true, upsert: true}
+        )
+        database.close()
+    }
     await user.findOneAndUpdate(
         { id: req.body.id },
         { $addToSet: { watchedEpisodes: req.body.watched } },
