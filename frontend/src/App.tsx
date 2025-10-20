@@ -1,9 +1,9 @@
-import Splash from "./Splash/Splash"
+import Home from "./Home/Home"
 
 const App = () => {
   return (
     <div>
-      <Splash/>
+      <Home/>
     </div>
   )
 }
