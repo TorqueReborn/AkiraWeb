@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
 import type { Anime } from "../Anime"
+import { useEffect, useState } from "react"
 
 const Home = () => {
   const [anime, setAnime] = useState<Anime[]>()
@@ -19,7 +19,12 @@ const Home = () => {
   }, [])
   return (
     <div>
-
+      {anime?.map(ani => (
+        <div>
+          <img src={ani.thumbnail} alt="" />
+          <h1>{ani.name}</h1>
+        </div>
+      ))}
     </div>
   )
 }
