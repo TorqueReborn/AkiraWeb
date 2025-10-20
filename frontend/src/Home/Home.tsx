@@ -9,8 +9,8 @@ const Home = () => {
     const getData = async () => {
       const response = await fetch(`${import.meta.env.VITE_BACK_END_URL}/anime/trending`)
       const edges = await response.json()
-      const animes: Anime[] = edges.map((edge: Anime) => ({
-        name: edge.name,
+      const animes: Anime[] = edges.map((edge: any) => ({
+        name: edge.englishName,
         thumbnail: edge.thumbnail
       }))
       setAnime(animes)
