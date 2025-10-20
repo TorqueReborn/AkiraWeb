@@ -2,6 +2,7 @@ import express from 'express'
 
 const animeRouter = express.Router()
 const API_END_POINT = "https://api.allanime.day/api"
+const REQUIRED_DATA = "name,englishName,thumbnail"
 
 const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
     const response = await fetch(API_END_POINT, {
@@ -23,9 +24,7 @@ animeRouter.get('/ids', async (req, res) => {
         QUERY = `
             query($ids: [String!]!){
                 showsWithIds(ids: $ids) {
-                    name,
-                    englishName,
-                    thumbnail,
+                    ${REQUIRED_DATA}
                 }
             }
         `
@@ -36,9 +35,7 @@ animeRouter.get('/ids', async (req, res) => {
         QUERY = `
             query($_id:String!) {
                 show(_id:$_id) {
-                    name,
-                    englishName,
-                    thumbnail
+                    ${REQUIRED_DATA}
                 }
             }
         `
@@ -55,9 +52,7 @@ animeRouter.get('/trending', async (req, res) => {
         query($search: SearchInput!){
             shows(search: $search) {
                 edges {
-                    _id,
-                    englishName,
-                    thumbnail
+                    ${REQUIRED_DATA}
                 }
             }
         }
