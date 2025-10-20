@@ -17,7 +17,7 @@ export const login = async (
     search.token = token
     await search.save()
     db.close()
-    return res.json({ token: 'djn' })
+    return res.status(200).send()
 }
 
 export const signup = async (
