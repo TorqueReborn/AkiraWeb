@@ -12,7 +12,6 @@ const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
             variables: VARIABLES
         })
     })
-    console.log(response)
     return await response.json()
 }
 
