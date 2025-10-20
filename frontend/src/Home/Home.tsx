@@ -1,3 +1,4 @@
+import Card from "./components/Card"
 import type { Anime } from "../Anime"
 import { useEffect, useState } from "react"
 
@@ -20,10 +21,7 @@ const Home = () => {
   return (
     <div>
       {anime?.map(ani => (
-        <div>
-          <img src={ani.thumbnail} alt="" />
-          <h1>{ani.name}</h1>
-        </div>
+        <Card name={ani.name} thumbnail={ani.thumbnail} />
       ))}
     </div>
   )
