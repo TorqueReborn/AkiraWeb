@@ -1,6 +1,10 @@
+import Splash from "./Splash/Splash"
+
 const App = () => {
   return (
-    <div className="">App</div>
+    <div>
+      <Splash/>
+    </div>
   )
 }
 
