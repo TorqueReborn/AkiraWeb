@@ -67,5 +67,12 @@ export const trending = async (
         }
     }
     const json = await getResponseJSON(QUERY, VARIABLES)
-    return res.json(json)
+    const edges = json.data.shows.edges
+    const fixedThumbnail = edges.map((edge: any) => {
+        if (!((edge.thumbnail as string).includes("http"))) {
+            return `https://wp.youtube-anime.com/aln.youtube-anime.com/${edge.thumbnail}`
+        }
+        return edge
+    })
+    return res.json(fixedThumbnail)
 }
