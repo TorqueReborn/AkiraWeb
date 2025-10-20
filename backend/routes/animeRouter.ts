@@ -45,4 +45,33 @@ animeRouter.get('/ids', async (req, res) => {
     return res.json(json)
 })
 
+animeRouter.get('/trending', async (req, res) => {
+    const QUERY = `
+        query($search: SearchInput!){
+            shows(search: $search) {
+                edges {
+                    _id,
+                    englishName,
+                    thumbnail
+                }
+            }
+        }
+    `
+    const VARIABLES = {
+        "search": {
+            "sortBy": "Recent"
+        }
+    }
+    const response = await fetch(API_END_POINT, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            query: QUERY,
+            variables: VARIABLES
+        })
+    })
+    const json = await response.json()
+    return res.json(json)
+})
+
 export default animeRouter
