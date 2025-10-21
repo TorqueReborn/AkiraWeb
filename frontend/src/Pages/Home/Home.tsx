@@ -19,9 +19,13 @@ const Home = () => {
   }, [])
   return (
     <div>
-      {anime?.map(ani => (
-        <Card name={ani.name} thumbnail={ani.thumbnail} />
-      ))}
+      <div className="flex">
+        {anime?.map(ani => (
+          <div className="shrink-0">
+            <Card name={ani.name} thumbnail={ani.thumbnail} />
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
