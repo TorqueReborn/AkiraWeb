@@ -1,5 +1,5 @@
+import type { Anime } from "../../Anime"
 import Card from "./components/Card"
-import type { Anime } from "../Anime"
 import { useEffect, useState } from "react"
 
 const Home = () => {

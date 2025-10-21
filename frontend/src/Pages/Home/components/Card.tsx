@@ -1,13 +1,15 @@
 interface CardProps {
-    name: string, 
-    thumbnail: string
+  name: string,
+  thumbnail: string
 }
 
-const Card = ({name, thumbnail}: CardProps) => {
+const Card = ({ name, thumbnail }: CardProps) => {
   return (
     <div>
-        <img src={thumbnail}/>
+      <div className="w-[10%] line-clamp-1 text-center">
+        <img src={thumbnail} />
         {name}
+      </div>
     </div>
   )
 }
