@@ -19,11 +19,9 @@ const Home = () => {
   }, [])
   return (
     <div>
-      <div className="flex">
+      <div className="flex gap-4">
         {anime?.map(ani => (
-          <div className="shrink-0">
-            <Card name={ani.name} thumbnail={ani.thumbnail} />
-          </div>
+          <Card name={ani.name} thumbnail={ani.thumbnail} />
         ))}
       </div>
     </div>
