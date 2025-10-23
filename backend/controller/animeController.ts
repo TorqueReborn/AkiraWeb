@@ -6,7 +6,7 @@ const API_END_POINT = "https://api.allanime.day/api"
 const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
     const response = await fetch(API_END_POINT, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             query: QUERY,
             variables: VARIABLES
@@ -68,11 +68,12 @@ export const trending = async (
     }
     const json = await getResponseJSON(QUERY, VARIABLES)
     const edges = json.data.shows.edges
-    const fixedThumbnail = edges.map((edge: any) => {
-        if (!((edge.thumbnail as string).includes("http"))) {
-            return `https://wp.youtube-anime.com/aln.youtube-anime.com/${edge.thumbnail}`
-        }
-        return edge
-    })
+    const fixedThumbnail = edges.map((edge: any) => ({
+        ...edge,
+        englishName: edge.englishName || edge.name,
+        thumbnail: (edge.thumbnail as string).includes("http")
+            ? edge.thumbnail
+            : `https://wp.youtube-anime.com/aln.youtube-anime.com/${edge.thumbnail}`
+    }))
     return res.json(fixedThumbnail)
 }
