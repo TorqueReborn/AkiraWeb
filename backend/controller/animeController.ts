@@ -14,6 +14,32 @@ const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
     return await response.json()
 }
 
+export const episode = async (
+    req: Request<Record<string, any>>,
+    res: Response<Record<string, any>>
+) => {
+    const QUERY = `
+        query($showId: String!, $translationType: VaildTranslationTypeEnumType!, $episodeString: String!){
+            episode(showId: $showId, translationType: $translationType, episodeString: $episodeString) {
+                episodeInfo {
+                    notes,
+                    thumbnails,
+                    vidInforssub,
+                    vidInforsdub,
+                    vidInforsraw
+                }
+            }
+        }
+    `
+    const VARIABLES = {
+        "showId": "ReooPAxPMsHM4KPMY",
+        "translationType": "sub",
+        "episodeString": "2"
+    }
+    const json = await getResponseJSON(QUERY, VARIABLES)
+    return res.json(json)
+}
+
 export const ids = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>
