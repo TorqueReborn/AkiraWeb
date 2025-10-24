@@ -22,7 +22,7 @@ const Home = () => {
     <div>
       <div className="flex gap-4">
         {anime?.map(ani => (
-          <Card name={ani.name} thumbnail={ani.thumbnail} />
+          <Card id={ani.id} name={ani.name} thumbnail={ani.thumbnail} />
         ))}
       </div>
     </div>
