@@ -1,6 +1,5 @@
 import type { Request, Response } from "express"
 
-const REQUIRED_DATA = "_id,name,englishName,thumbnail"
 const API_END_POINT = "https://api.allanime.day/api"
 
 const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
@@ -21,6 +20,7 @@ export const ids = async (
 ) => {
     let QUERY = ''
     let VARIABLES = {}
+    const REQUIRED_DATA = "availableEpisodesDetail"
     if (Array.isArray(req.query.ids)) {
         QUERY = `
             query($ids: [String!]!){
@@ -56,7 +56,7 @@ export const trending = async (
         query($search: SearchInput!){
             shows(search: $search) {
                 edges {
-                    ${REQUIRED_DATA}
+                    _id,name,englishName,thumbnail
                 }
             }
         }
