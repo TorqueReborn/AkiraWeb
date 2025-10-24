@@ -10,6 +10,7 @@ const Home = () => {
       const response = await fetch(`${import.meta.env.VITE_BACK_END_URL}/anime/trending`)
       const edges = await response.json()
       const animes: Anime[] = edges.map((edge: any) => ({
+        id: edge._id,
         name: edge.englishName,
         thumbnail: edge.thumbnail
       }))
