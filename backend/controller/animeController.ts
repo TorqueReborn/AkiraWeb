@@ -1,6 +1,6 @@
 import type { Request, Response } from "express"
 
-const REQUIRED_DATA = "name,englishName,thumbnail"
+const REQUIRED_DATA = "_id,name,englishName,thumbnail"
 const API_END_POINT = "https://api.allanime.day/api"
 
 const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
