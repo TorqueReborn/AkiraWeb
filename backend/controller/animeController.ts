@@ -18,6 +18,7 @@ export const episode = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>
 ) => {
+    if (!req.query.id || !req.query.type || !req.query.episode) return res.status(404).send()
     const QUERY = `
         query($showId: String!, $translationType: VaildTranslationTypeEnumType!, $episodeString: String!){
             episode(showId: $showId, translationType: $translationType, episodeString: $episodeString) {
@@ -32,9 +33,9 @@ export const episode = async (
         }
     `
     const VARIABLES = {
-        "showId": "ReooPAxPMsHM4KPMY",
-        "translationType": "sub",
-        "episodeString": "2"
+        "showId": req.query.id,
+        "translationType": req.query.type,
+        "episodeString": req.query.episode
     }
     const json = await getResponseJSON(QUERY, VARIABLES)
     return res.json(json)
