@@ -6,7 +6,7 @@ const Watch = () => {
   
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(`${import.meta.env.VITE_BACK_END_URL}/anime/episode`)
+      const response = await fetch(`${import.meta.env.VITE_BACK_END_URL}/anime/episode?id=${params.id}&type=sub&episode=${params.episode}`)
       const edges = await response.json()
     }
     getData()
