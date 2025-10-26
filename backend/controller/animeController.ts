@@ -37,8 +37,17 @@ export const episode = async (
         "translationType": req.query.type,
         "episodeString": req.query.episode
     }
-    const json = await getResponseJSON(QUERY, VARIABLES)
-    return res.json(json)
+    let json = await getResponseJSON(QUERY, VARIABLES)
+    const { thumbnails, vidInforssub, vidInforsdub } = json.data.episode.episodeInfo;
+    const BASE_URL = 'https://aln.youtube-anime.com';
+    const mappedThumbnails = thumbnails.map((t: string) =>
+        t.includes('http') ? t : `${BASE_URL}${t}`
+    );
+    return res.json({
+        thumbnails: mappedThumbnails,
+        videoURL: `${BASE_URL}${vidInforssub.vidPath}`,
+        videoDubURL: vidInforsdub?.vidPath ? `${BASE_URL}${vidInforsdub.vidPath}` : null
+    });
 }
 
 export const ids = async (
