@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <div>404 Not Found</div>
   }, {
-    path: '/watch/:id',
+    path: '/watch/:id/:episode',
     element: <Watch/>
   }
 ])

@@ -10,7 +10,7 @@ const Card = ({ id, name, thumbnail }: CardProps) => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate(`/watch/${id}`)
+    navigate(`/watch/${id}/1`)
   }
 
   return (
