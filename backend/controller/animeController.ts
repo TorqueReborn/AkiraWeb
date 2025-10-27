@@ -62,7 +62,7 @@ export const latestEpisode = async (
     let json = await getResponseJSON(QUERY, VARIABLES);
     let sourceUrls = json.data.episode.sourceUrls
         .filter((source: any) => source.sourceUrl.includes("--"))
-        .map((source: any) => ({enc: source.sourceUrl}))
+        .map((source: any) => ({ enc: source.sourceUrl }))
     return res.json(sourceUrls);
 }
 
@@ -137,7 +137,7 @@ export const ids = async (
     return res.json(json)
 }
 
-export const trending = async (
+export const recent = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>
 ) => {
