@@ -15,7 +15,7 @@ const Splash = ({ setSplashShown }: SplashInterface) => {
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex items-center gap-4">
         <img src="/logo.png" width={100} />
-        <div className="text-8xl mt-3 ml-4 font-extrabold bg-linear-to-r from-indigo-800 via-blue-400 to-purple-400 text-transparent bg-clip-text">
+        <div className="text-6xl mt-3 ml-4 font-bold bg-linear-to-r from-indigo-800 via-blue-400 to-purple-400 text-transparent bg-clip-text">
           Akira
         </div>
       </div>
