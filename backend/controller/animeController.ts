@@ -14,6 +14,13 @@ const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
     return await response.json()
 }
 
+export const latestEpisode = async (
+    req: Request<Record<string, any>>,
+    res: Response<Record<string, any>>
+) => {
+    return res.json({message: 'This is updated api url'})
+}
+
 export const episode = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>
