@@ -1,6 +1,16 @@
 import type { Request, Response } from "express"
 
+const SERVER_END_POINT = "https://allanime.day"
 const API_END_POINT = "https://api.allanime.day/api"
+
+function decrypt(hexStr: string) {
+    let result = "";
+    for (let i = 2; i < hexStr.length; i += 2) {
+        const byte = parseInt(hexStr.slice(i, i + 2), 16) ^ 56;
+        result += String.fromCharCode(byte);
+    }
+    return result;
+}
 
 const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
     const response = await fetch(API_END_POINT, {
@@ -18,7 +28,28 @@ export const latestEpisode = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>
 ) => {
-    return res.json({message: 'This is updated api url'})
+    if (!req.query.id || !req.query.type || !req.query.episode) return res.status(404).send()
+    const QUERY = `
+        query($showId: String!, $translationType: VaildTranslationTypeEnumType!, $episodeString: String!){
+            episode(showId: $showId, translationType: $translationType, episodeString: $episodeString) {
+                sourceUrls
+            }
+        }
+    `
+    const VARIABLES = {
+        "showId": req.query.id,
+        "translationType": req.query.type,
+        "episodeString": req.query.episode
+    }
+    let json = await getResponseJSON(QUERY, VARIABLES);
+    let sourceUrls = json.data.episode.sourceUrls
+        .filter((source: any) => source.sourceUrl.includes("--"))
+        .map((source: any) => {
+            let d = decrypt(source.sourceUrl);
+            if (d.includes("clock")) d = `${SERVER_END_POINT}${d}`.replace("clock", "clock.json");
+            return { sourceUrl: d };
+        });
+    return res.json(sourceUrls);
 }
 
 export const episode = async (
