@@ -171,12 +171,12 @@ export const trending = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>
 ) => {
-    const QUERY = `
+    let QUERY = `
         query($type: VaildPopularTypeEnumType!, $size: Int!, $dateRange: Int!){
             queryPopular(type: $type, size: $size, dateRange: $dateRange) {
                 recommendations {
                     anyCard {
-                       _id,name,englishName,thumbnail
+                       _id,name,englishName,thumbnail,banner
                     }
                 }
             }
@@ -187,14 +187,27 @@ export const trending = async (
         "size": 20,
         "dateRange": 1
     }
-    const json = await getResponseJSON(QUERY, VARIABLES)
-    const edges = json.data.queryPopular.recommendations
+    let json = await getResponseJSON(QUERY, VARIABLES)
+    let edges = json.data.queryPopular.recommendations
+    const ids = edges.map((edge: any) => edge.anyCard._id)
+    QUERY = `
+            query($ids: [String!]!){
+                showsWithIds(ids: $ids) {
+                    _id,name,englishName,banner,thumbnail
+                }
+            }
+        `
+    let VARS = {
+        ids
+    }
+    json = await getResponseJSON(QUERY, VARS)
+    edges = json.data.showsWithIds
     const fixedThumbnail = edges.map((edge: any) => ({
-        ...edge.anyCard,
-        englishName: edge.anyCard.englishName || edge.anyCard.name,
-        thumbnail: (edge.anyCard.thumbnail as string).includes("http")
-            ? edge.anyCard.thumbnail
-            : `https://wp.youtube-anime.com/aln.youtube-anime.com/${edge.anyCard.thumbnail}`
+        ...edge,
+        englishName: edge.englishName || edge.name,
+        thumbnail: (edge.thumbnail as string).includes("http")
+            ? edge.thumbnail
+            : `https://wp.youtube-anime.com/aln.youtube-anime.com/${edge.thumbnail}`
     }))
     return res.json(fixedThumbnail)
 }
