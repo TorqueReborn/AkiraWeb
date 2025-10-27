@@ -60,7 +60,6 @@ export const latestEpisode = async (
         "episodeString": req.query.episode
     }
     let json = await getResponseJSON(QUERY, VARIABLES);
-    // return res.json(json)?
     let sourceUrls = json.data.episode.sourceUrls
         .filter((source: any) => source.sourceUrl.includes("--"))
         .map((source: any) => ({enc: source.sourceUrl}))
