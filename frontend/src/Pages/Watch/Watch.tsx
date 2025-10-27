@@ -9,7 +9,7 @@ const Watch = () => {
     const getData = async () => {
       const response = await fetch(`${import.meta.env.VITE_BACK_END_URL}/anime/episode?id=${params.id}&type=sub&episode=${params.episode}`)
       const json = await response.json()
-      setVideoURL(json.videoURL)
+      setVideoURL(json.legacyVideoURL)
     }
     getData()
   }, [])
