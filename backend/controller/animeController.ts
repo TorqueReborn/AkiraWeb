@@ -24,6 +24,24 @@ const getResponseJSON = async (QUERY: string, VARIABLES: object) => {
     return await response.json()
 }
 
+export const serverUrl = async (
+    req: Request<Record<string, any>>,
+    res: Response<Record<string, any>>
+) => {
+    const { server } = req.query
+    if (!server) return res.status(404).send()
+    let decryptedUrl = decrypt(server as string)
+    if (decryptedUrl.includes("clock")) {
+        const clockUrl = `${SERVER_END_POINT}${decryptedUrl}`.replace("clock", "clock.json")
+        const response = await fetch(clockUrl)
+        const data = await response.json()
+
+        const firstLink = data.links?.[0]?.link
+        if (firstLink) return res.json({ server: firstLink })
+    }
+    return res.status(404).send()
+}
+
 export const latestEpisode = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>
@@ -44,11 +62,6 @@ export const latestEpisode = async (
     let json = await getResponseJSON(QUERY, VARIABLES);
     let sourceUrls = json.data.episode.sourceUrls
         .filter((source: any) => source.sourceUrl.includes("--"))
-        .map((source: any) => {
-            let d = decrypt(source.sourceUrl);
-            if (d.includes("clock")) d = `${SERVER_END_POINT}${d}`.replace("clock", "clock.json");
-            return { sourceUrl: d };
-        });
     return res.json(sourceUrls);
 }
 
