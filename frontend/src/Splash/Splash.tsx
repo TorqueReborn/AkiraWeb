@@ -7,20 +7,20 @@ interface SplashInterface {
 
 const Splash = ({ setSplashShown }: SplashInterface) => {
   const handleClick = () => {
-    Cookies.set("splashShown", "true")
     setSplashShown(true)
+    Cookies.set("splashShown", "true")
   }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex items-center gap-4">
         <img src="/logo.png" width={100} />
-        <div className="text-6xl font-black bg-linear-to-r from-indigo-800 via-blue-400 to-purple-400 text-transparent bg-clip-text">
+        <div className="text-8xl mt-3 ml-4 font-extrabold bg-linear-to-r from-indigo-800 via-blue-400 to-purple-400 text-transparent bg-clip-text">
           Akira
         </div>
       </div>
-      <div className="bg-white mt-15 rounded-full" tabIndex={0}>
-        <MdKeyboardArrowRight size={45} className="text-black" onClick={handleClick} />
+      <div className="mt-32 rounded-full bg-white" tabIndex={0}>
+        <MdKeyboardArrowRight size={45} className="text-black " onClick={handleClick} />
       </div>
     </div>
   )
