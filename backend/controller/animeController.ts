@@ -22,13 +22,14 @@ export const episode = async (
     const QUERY = `
         query($showId: String!, $translationType: VaildTranslationTypeEnumType!, $episodeString: String!){
             episode(showId: $showId, translationType: $translationType, episodeString: $episodeString) {
-                episodeInfo {
-                    notes,
+                episodeString,
+                sourceUrls,
+                episodeInfo{
                     thumbnails,
+                    description,
                     vidInforssub,
-                    vidInforsdub,
-                    vidInforsraw
-                }
+                    vidInforsdub
+                },
             }
         }
     `
@@ -45,8 +46,8 @@ export const episode = async (
     );
     return res.json({
         thumbnails: mappedThumbnails,
-        videoURL: `${BASE_URL}${vidInforssub.vidPath}`,
-        videoDubURL: vidInforsdub?.vidPath ? `${BASE_URL}${vidInforsdub.vidPath}` : null
+        legacyVideoURL: `${BASE_URL}${vidInforssub.vidPath}`,
+        legacyDubURL: vidInforsdub?.vidPath ? `${BASE_URL}${vidInforsdub.vidPath}` : null
     });
 }
 
