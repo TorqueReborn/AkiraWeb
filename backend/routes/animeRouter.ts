@@ -7,12 +7,12 @@ animeRouter.get('/ids', async (req, res) => {
     ids(req, res)
 })
 
-animeRouter.get('/trending', async (req, res) => {
-    trending(req, res)
-})
-
 animeRouter.get('/episode', async (req, res) => {
     episode(req, res)
+})
+
+animeRouter.get('/trending', async (req, res) => {
+    trending(req, res)
 })
 
 export default animeRouter

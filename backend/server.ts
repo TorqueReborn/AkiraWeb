@@ -1,5 +1,5 @@
-import express from 'express'
 import cors from 'cors'
+import express from 'express'
 import { configDotenv } from 'dotenv'
 import authRouter from './routes/authRouter.ts'
 import userRouter from './routes/userRouter.ts'
