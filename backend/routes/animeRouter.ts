@@ -1,6 +1,5 @@
 import express from 'express'
-import { episode, ids, latestEpisode, serverUrl, recent } from '../controller/animeController.ts'
-import { updateEpisode } from '../controller/userController.ts'
+import { episode, ids, latestEpisode, serverUrl, recent, trending } from '../controller/animeController.ts'
 
 const animeRouter = express.Router()
 
@@ -14,6 +13,10 @@ animeRouter.get('/episode', async (req, res) => {
 
 animeRouter.get('/recent', async (req, res) => {
     recent(req, res)
+})
+
+animeRouter.get('/trending', async (req, res) => {
+    trending(req, res)
 })
 
 animeRouter.get('/latestEpisode', async (req, res) => {

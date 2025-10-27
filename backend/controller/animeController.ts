@@ -166,3 +166,35 @@ export const recent = async (
     }))
     return res.json(fixedThumbnail)
 }
+
+export const trending = async (
+    req: Request<Record<string, any>>,
+    res: Response<Record<string, any>>
+) => {
+    const QUERY = `
+        query($type: VaildPopularTypeEnumType!, $size: Int!, $dateRange: Int!){
+            queryPopular(type: $type, size: $size, dateRange: $dateRange) {
+                recommendations {
+                    anyCard {
+                       _id,name,englishName,thumbnail
+                    }
+                }
+            }
+        }
+    `
+    const VARIABLES = {
+        "type": "anime",
+        "size": 20,
+        "dateRange": 1
+    }
+    const json = await getResponseJSON(QUERY, VARIABLES)
+    const edges = json.data.queryPopular.recommendations
+    const fixedThumbnail = edges.map((edge: any) => ({
+        ...edge.anyCard,
+        englishName: edge.anyCard.englishName || edge.anyCard.name,
+        thumbnail: (edge.anyCard.thumbnail as string).includes("http")
+            ? edge.anyCard.thumbnail
+            : `https://wp.youtube-anime.com/aln.youtube-anime.com/${edge.anyCard.thumbnail}`
+    }))
+    return res.json(fixedThumbnail)
+}
