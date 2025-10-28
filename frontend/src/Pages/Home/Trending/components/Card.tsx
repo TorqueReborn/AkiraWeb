@@ -1,11 +1,13 @@
 interface CardProps {
-    children: React.ReactNode
+  name: string,
+  thumbnail: string
 }
 
-const Card = ({children}: CardProps) => {
+const Card = ({name, thumbnail}: CardProps) => {
   return (
     <div>
-        {children}
+        <img src={thumbnail} alt={name} />
+        {name}
     </div>
   )
 }
