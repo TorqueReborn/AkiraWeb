@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import Card from "./components/Card"
 
 const Trending = () => {
     useEffect(() => {
@@ -9,7 +10,9 @@ const Trending = () => {
     }, [])
 
     return (
-        <div>Trending</div>
+        <div>
+            <Card>I am a card</Card>
+        </div>
     )
 }
 
