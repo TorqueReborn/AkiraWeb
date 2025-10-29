@@ -19,7 +19,7 @@ const Spotlight = () => {
         getData()
     }, [])
 
-    useEffect(()=> {
+    useEffect(() => {
         if (banners && banners.length > 0) {
             const intervalId = setInterval(() => {
                 setIndex(prevIndex => (prevIndex + 1) % banners.length)
@@ -30,7 +30,7 @@ const Spotlight = () => {
 
     return (
         <div>
-            {banners && <Banner name={banners[index].name} banner={banners[index].banner}/>}
+            {banners && <Banner name={banners[index].name} banner={banners[index].banner} />}
         </div>
     )
 }

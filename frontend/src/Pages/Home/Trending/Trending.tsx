@@ -21,7 +21,7 @@ const Trending = () => {
     }, [])
 
     return (
-        <div>
+        <div className="flex">
             {anime?.map(an => <Card name={an.name} thumbnail={an.thumbnail}/>)}
         </div>
     )
