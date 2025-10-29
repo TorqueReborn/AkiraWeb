@@ -21,8 +21,13 @@ const Trending = () => {
     }, [])
 
     return (
-        <div className="flex overflow-scroll scrollbar-hide mt-4">
-            {anime?.map(an => <Card name={an.name} thumbnail={an.thumbnail}/>)}
+        <div className="mt-4">
+            <h2 className="mb-4 text-4xl font-bold ml-4">
+                Trending
+            </h2>
+            <div className="flex overflow-scroll scrollbar-hide">
+                {anime?.map(an => <Card name={an.name} thumbnail={an.thumbnail} />)}
+            </div>
         </div>
     )
 }
