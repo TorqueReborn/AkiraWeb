@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import Banner from "./components/Banner"
 
 interface Anime {
     name: string,
@@ -29,7 +30,7 @@ const Spotlight = () => {
 
     return (
         <div>
-            {banners && <img src={banners[index].banner} alt="Anime Banner" />}
+            {banners && <Banner name={banners[index].name} banner={banners[index].banner}/>}
         </div>
     )
 }
