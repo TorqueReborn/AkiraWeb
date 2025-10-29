@@ -1,17 +1,24 @@
+import { useNavigate } from "react-router-dom"
 
 interface CardProps {
+  id: string,
   name: string,
   thumbnail: string
 }
 
-const Card = ({name, thumbnail}: CardProps) => {
+const Card = ({ id, name, thumbnail }: CardProps) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/${id}`)
+  }
 
   return (
-    <div className="w-52 relative ml-8 flex-none">
-        {<img src={thumbnail} alt={name} />}
-        <div className="absolute bottom-3 -left-3 origin-left -rotate-90 line-clamp-1">
-          {name}
-        </div>
+    <div className="w-52 relative ml-8 flex-none" onClick={handleClick}>
+      {<img src={thumbnail} alt={name} />}
+      <div className="absolute bottom-3 -left-3 origin-left -rotate-90 line-clamp-1">
+        {name}
+      </div>
     </div>
   )
 }

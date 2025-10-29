@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Card from "./components/Card"
 
 interface Anime {
+    id: string,
     name: string,
     thumbnail: string
 }
@@ -13,6 +14,7 @@ const Trending = () => {
             const response = await fetch(`${import.meta.env.VITE_BACK_END_URL}/anime/trending`)
             const json = await response.json()
             setAnime(json.map((j: any) => ({
+                id: j._id,
                 name: j.englishName || j.name,
                 thumbnail: j.thumbnail
             })))
@@ -26,7 +28,7 @@ const Trending = () => {
                 Trending
             </h2>
             <div className="flex overflow-scroll scrollbar-hide">
-                {anime?.map(an => <Card name={an.name} thumbnail={an.thumbnail} />)}
+                {anime?.map(an => <Card id={an.id} name={an.name} thumbnail={an.thumbnail} />)}
             </div>
         </div>
     )

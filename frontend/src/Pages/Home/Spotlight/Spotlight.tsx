@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Banner from "./components/Banner"
 
 interface Anime {
+    _id: string,
     name: string,
     banner: string
 }
@@ -30,7 +31,7 @@ const Spotlight = () => {
 
     return (
         <div>
-            {banners && <Banner name={banners[index].name} banner={banners[index].banner} />}
+            {banners && <Banner id={banners[index]._id} name={banners[index].name} banner={banners[index].banner} />}
         </div>
     )
 }
