@@ -1,6 +1,12 @@
+import Button from "./components/Button"
+
 const Nav = () => {
   return (
-    <div>Nav</div>
+    <div className="flex items-center relative h-16">
+      <div className="absolute right-10">
+        <Button />
+      </div>
+    </div>
   )
 }
 
