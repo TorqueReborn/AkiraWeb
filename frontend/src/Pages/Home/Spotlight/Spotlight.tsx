@@ -18,6 +18,15 @@ const Spotlight = () => {
         getData()
     }, [])
 
+    useEffect(()=> {
+        if (banners && banners.length > 0) {
+            const intervalId = setInterval(() => {
+                setIndex(prevIndex => (prevIndex + 1) % banners.length)
+            }, 3000)
+            return () => clearInterval(intervalId)
+        }
+    }, [banners])
+
     return (
         <div>
             {banners && <img src={banners[index].banner} alt="Anime Banner" />}
