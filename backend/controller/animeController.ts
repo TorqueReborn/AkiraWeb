@@ -103,6 +103,24 @@ export const episode = async (
     });
 }
 
+export const details = async (
+    req: Request<Record<string, any>>,
+    res: Response<Record<string, any>>
+) => {
+    let QUERY = `
+            query($ids: [String!]!){
+                showsWithIds(ids: $ids) {
+                    _id
+                }
+            }
+        `
+    let VARIABLES = {
+        "ids": req.query.ids
+    }
+    const json = await getResponseJSON(QUERY, VARIABLES)
+    return res.json(json)
+}
+
 export const ids = async (
     req: Request<Record<string, any>>,
     res: Response<Record<string, any>>

@@ -1,10 +1,14 @@
 import express from 'express'
-import { episode, ids, latestEpisode, serverUrl, recent, trending } from '../controller/animeController.ts'
+import { episode, ids, latestEpisode, serverUrl, recent, trending, details } from '../controller/animeController.ts'
 
 const animeRouter = express.Router()
 
 animeRouter.get('/ids', async (req, res) => {
     ids(req, res)
+})
+
+animeRouter.get('/details', async (req, res) => {
+    details(req, res)
 })
 
 animeRouter.get('/episode', async (req, res) => {
