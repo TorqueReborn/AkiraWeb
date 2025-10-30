@@ -115,7 +115,7 @@ export const details = async (
             }
         `
     let VARIABLES = {
-        "ids": req.query.ids
+        "ids": req.query.id
     }
     const json = await getResponseJSON(QUERY, VARIABLES)
     return res.json(json)
@@ -171,6 +171,36 @@ export const recent = async (
     const VARIABLES = {
         "search": {
             "sortBy": "Recent"
+        }
+    }
+    const json = await getResponseJSON(QUERY, VARIABLES)
+    const edges = json.data.shows.edges
+    const fixedThumbnail = edges.map((edge: any) => ({
+        ...edge,
+        englishName: edge.englishName || edge.name,
+        thumbnail: (edge.thumbnail as string).includes("http")
+            ? edge.thumbnail
+            : `https://wp.youtube-anime.com/aln.youtube-anime.com/${edge.thumbnail}`
+    }))
+    return res.json(fixedThumbnail)
+}
+
+export const search = async (
+    req: Request<Record<string, any>>,
+    res: Response<Record<string, any>>
+) => {
+    const QUERY = `
+        query($search: SearchInput!){
+            shows(search: $search) {
+                edges {
+                    _id,name,englishName,thumbnail
+                }
+            }
+        }
+    `
+    const VARIABLES = {
+        "search": {
+            "query": req.query.search
         }
     }
     const json = await getResponseJSON(QUERY, VARIABLES)
