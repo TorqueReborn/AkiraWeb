@@ -108,14 +108,14 @@ export const details = async (
     res: Response<Record<string, any>>
 ) => {
     let QUERY = `
-            query($ids: [String!]!){
-                showsWithIds(ids: $ids) {
+            query($id: String!){
+                show(_id: $id) {
                     _id
                 }
             }
         `
     let VARIABLES = {
-        "ids": req.query.id
+        "id": req.query.id
     }
     const json = await getResponseJSON(QUERY, VARIABLES)
     return res.json(json)
