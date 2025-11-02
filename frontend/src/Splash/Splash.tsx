@@ -19,7 +19,7 @@ const Splash = ({ setSplashShown }: SplashInterface) => {
           Akira
         </div>
       </div>
-      <div className="mt-36 rounded-full bg-white" tabIndex={0}>
+      <div className="mt-36 rounded-full bg-white cursor-pointer" tabIndex={0}>
         <MdKeyboardArrowRight size={45} className="text-black " onClick={handleClick} />
       </div>
     </div>
